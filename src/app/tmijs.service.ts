@@ -48,12 +48,13 @@ export class TmijsService {
   client: tmi.Client;
 
   constructor() {
-    if (environment.name === "prod") {
-      // No options means it's anonymous.
-      this.client = tmi.Client({ channels: ["#Monstercat"] }); //Monstercat is a 24/7 music channel.
-    }
-    if (environment.name === "dev") {
-      this.client = tmi.Client(devOptions);
+    switch (environment.name) {
+      case "prod":
+        this.client = tmi.Client({ channels: ["#Monstercat"] }); //Monstercat is a 24/7 music channel.
+      case "dev":
+        this.client = tmi.Client(devOptions);
+      default:
+        this.client = tmi.Client({ channels: ["#Monstercat"] });
     }
 
     this.client.connect().then(data => {

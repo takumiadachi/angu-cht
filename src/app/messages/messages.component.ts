@@ -1,6 +1,5 @@
 import { Component, OnInit } from "@angular/core";
 import { TmijsService } from "../tmijs.service";
-import { Message } from "./message";
 
 @Component({
   selector: "app-messages",
