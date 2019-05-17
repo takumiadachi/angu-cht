@@ -3,7 +3,11 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  name: name,
+  twitch_username: "username",
+  twitch_oauth_pass: "password",
+  tmijs_clientId: "clientid"
 };
 
 /*
