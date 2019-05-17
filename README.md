@@ -4,6 +4,8 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 This is a Twitch Chat application created using tmi.js and Angular 7.
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/dfc1648a-81d2-4987-888c-77947ccb840d/deploy-status)](https://app.netlify.com/sites/elastic-borg-0e66e5/deploys)
+
 ## Development server
 
 Copy ./src/environment/environtment.ts to ./src/environment/environment.dev.ts and replace:
