@@ -8,48 +8,56 @@ let username: string = environment.twitch_username;
 let password: string = environment.twitch_oauth_pass;
 let clientId: string = environment.tmijs_clientId;
 
+let devOptions: tmi.Options = {
+  channels: ["#landail", "#PlayHearthstone"],
+  connection: {
+    maxReconnectAttempts: 2,
+    maxReconnectInverval: 10,
+    reconnect: true,
+    reconnectDecay: 20,
+    reconnectInterval: 10,
+    secure: true,
+    timeout: 20
+  },
+  identity: {
+    password: password,
+    username: username
+  },
+  logger: {
+    warn: message => {
+      console.log(message);
+    },
+    error: message => {
+      console.log(message);
+    },
+    info: message => {
+      // console.log(message);
+    }
+  },
+  options: {
+    clientId: clientId,
+    debug: true
+  }
+};
+
 @Injectable({
   providedIn: "root"
 })
 export class TmijsService {
   messages: Message[] = [];
-
-  options: tmi.Options = {
-    channels: ["#landail", "#PlayHearthstone"],
-    connection: {
-      maxReconnectAttempts: 2,
-      maxReconnectInverval: 10,
-      reconnect: true,
-      reconnectDecay: 20,
-      reconnectInterval: 10,
-      secure: true,
-      timeout: 20
-    },
-    identity: {
-      password: password,
-      username: username
-    },
-    logger: {
-      warn: message => {
-        console.log(message);
-      },
-      error: message => {
-        console.log(message);
-      },
-      info: message => {
-        // console.log(message);
-      }
-    },
-    options: {
-      clientId: clientId,
-      debug: true
-    }
-  };
-
-  client: tmi.Client = tmi.Client(this.options);
+  client: tmi.Client;
 
   constructor() {
+    if (environment.name === "prod") {
+      // No options means it's anonymous.
+      this.client = tmi.Client({ channels: ["#Monstercat"] }); //Monstercat is a 24/7 music channel.
+    }
+    if (environment.name === "dev") {
+      this.client = tmi.Client(devOptions);
+    }
+
     this.client.connect().then(data => {
+      console.log(this.client.getUsername());
       console.log(data);
       this.client.on("message", (channel, userstate, messageText, self) => {
         // Don't listen to my own messages..

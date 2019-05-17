@@ -8,7 +8,7 @@ import { Message } from "./message";
   styleUrls: ["./messages.component.scss"]
 })
 export class MessagesComponent implements OnInit {
-  constructor(private tmijsService: TmijsService) {}
+  constructor(public tmijsService: TmijsService) {}
 
   ngOnInit() {}
 }
