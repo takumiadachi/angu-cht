@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { environment } from "../environments/environment";
+import { Message } from "./messages/message";
 
 import * as tmi from "tmi.js";
 
@@ -11,10 +12,10 @@ let clientId: string = environment.tmijs_clientId;
   providedIn: "root"
 })
 export class TmijsService {
-  messages: string[] = [];
+  messages: Message[] = [];
 
   options: tmi.Options = {
-    channels: ["#Starcraft"],
+    channels: ["#landail", "#PlayHearthstone"],
     connection: {
       maxReconnectAttempts: 2,
       maxReconnectInverval: 10,
@@ -36,7 +37,7 @@ export class TmijsService {
         console.log(message);
       },
       info: message => {
-        console.log(message);
+        // console.log(message);
       }
     },
     options: {
@@ -48,11 +49,70 @@ export class TmijsService {
   client: tmi.Client = tmi.Client(this.options);
 
   constructor() {
-    this.client.connect();
+    this.client.connect().then(data => {
+      console.log(data);
+      this.client.on("message", (channel, userstate, messageText, self) => {
+        // Don't listen to my own messages..
+        if (self) return;
+
+        // Handle different message types..
+        switch (userstate["message-type"]) {
+          case "action":
+            // This is an action message..
+            break;
+          case "chat":
+            // This is a chat message..
+            const message: Message = {
+              badges: userstate["badges"],
+              color: userstate["color"],
+              "display-name": userstate["display-name"],
+              emotes: userstate["emotes"],
+              mod: userstate["mod"],
+              "room-id": userstate["room-id"],
+              subscriber: userstate["subscriber"],
+              turbo: userstate["turbo"],
+              "user-id": userstate["user-id"],
+              "user-type": userstate["user-type"],
+              "emotes-raw": userstate["emotes-raw"],
+              "badges-raw": userstate["badges-raw"],
+              "message-type": userstate["message-type"],
+              username: userstate["username"],
+              message: messageText
+            };
+            console.log(this.messages);
+            this.addMessage(message);
+            break;
+          case "whisper":
+            // This is a whisper..
+            break;
+          default:
+            // Something else ?
+            break;
+        }
+      });
+    });
   }
 
-  addMessage(message: string) {
+  addMessage(message: Message) {
     this.messages.push(message);
+  }
+
+  /**
+   * Join a channel. E.g #Goati_
+   *
+   * @param channel
+   */
+  joinChannel(channel: string) {
+    if (this.client) {
+      this.client
+        .join(channel)
+        .then(data => {
+          console.log(data);
+        })
+        .catch(err => {
+          console.error(err);
+        });
+    }
   }
 
   clear() {

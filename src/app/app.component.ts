@@ -7,7 +7,8 @@ import { TmijsService } from "./tmijs.service";
   styleUrls: ["./app.component.scss"]
 })
 export class AppComponent {
-  title = "angu-cht";
+  title: string = "angu-cht";
+  channel: string = "";
 
   constructor(private tmijsService: TmijsService) {
     // Called first time before the ngOnInit()
