@@ -2,7 +2,7 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.8.
 
-This is a Twitch Chat application created using tmi.js and Angular 7
+This is a Twitch Chat application created using tmi.js and Angular 7.
 
 ## Development server
 
