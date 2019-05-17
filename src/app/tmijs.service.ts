@@ -50,11 +50,27 @@ export class TmijsService {
   constructor() {
     switch (environment.name) {
       case "prod":
-        this.client = tmi.Client({ channels: ["#Monstercat"] }); //Monstercat is a 24/7 music channel.
+        this.client = tmi.Client({
+          channels: ["#Monstercat"],
+          connection: {
+            maxReconnectAttempts: 2,
+            maxReconnectInverval: 10,
+            reconnect: true,
+            secure: true
+          }
+        }); //Monstercat is a 24/7 music channel.
       case "dev":
         this.client = tmi.Client(devOptions);
       default:
-        this.client = tmi.Client({ channels: ["#Monstercat"] });
+        this.client = tmi.Client({
+          channels: ["#Monstercat"],
+          connection: {
+            maxReconnectAttempts: 2,
+            maxReconnectInverval: 10,
+            reconnect: true,
+            secure: true
+          }
+        });
     }
 
     this.client.connect().then(data => {
