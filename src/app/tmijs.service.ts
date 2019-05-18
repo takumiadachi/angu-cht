@@ -75,6 +75,7 @@ export class TmijsService {
 
     this.client.connect().then(data => {
       console.log(this.client.getUsername());
+      console.log(this.client.getChannels());
       console.log(data);
       this.client.on("message", (channel, userstate, messageText, self) => {
         // Don't listen to my own messages..
