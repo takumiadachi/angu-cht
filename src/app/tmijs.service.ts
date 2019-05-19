@@ -48,6 +48,7 @@ export class TmijsService {
   client: tmi.Client;
 
   constructor() {
+    console.log(environment.name);
     switch (environment.name) {
       case "prod":
         this.client = tmi.Client({
@@ -59,8 +60,10 @@ export class TmijsService {
             secure: true
           }
         }); //Monstercat is a 24/7 music channel.
+        break;
       case "dev":
         this.client = tmi.Client(devOptions);
+        break;
       default:
         this.client = tmi.Client({
           channels: ["#Monstercat"],
@@ -115,7 +118,7 @@ export class TmijsService {
         }
       });
       this.client.on("join", (channel, username, self) => {
-        console.log(`${username} joined #${channel}`);
+        console.log(`${username} joined ${channel}`);
       });
       this.client.on("logon", () => {
         console.log(`You are logged in as ${this.client.getUsername()}`);
@@ -143,6 +146,10 @@ export class TmijsService {
           console.error(err);
         });
     }
+  }
+
+  getChannels(): string[] {
+    return this.client.getChannels();
   }
 
   clear() {
