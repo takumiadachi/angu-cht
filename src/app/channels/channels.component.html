@@ -1,1 +1,4 @@
+<h2>Channels</h2>
+<label for="channel">Join Channel: </label>
+<input [(ngModel)]="channel" placeholder="name" />
 <div *ngFor="let channel of tmijsService.getChannels()">{{ channel }}</div>

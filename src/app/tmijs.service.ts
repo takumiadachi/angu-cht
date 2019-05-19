@@ -9,7 +9,7 @@ let password: string = environment.twitch_oauth_pass;
 let clientId: string = environment.tmijs_clientId;
 
 let devOptions: tmi.Options = {
-  channels: ["#landail", "#PlayHearthstone"],
+  channels: ["#starcraft", "#PlayHearthstone"],
   connection: {
     maxReconnectAttempts: 2,
     maxReconnectInverval: 10,
@@ -104,7 +104,8 @@ export class TmijsService {
               "badges-raw": userstate["badges-raw"],
               "message-type": userstate["message-type"],
               username: userstate["username"],
-              message: messageText
+              message: messageText,
+              channel: channel
             };
             console.log(this.messages);
             this.addMessage(message);
@@ -141,17 +142,47 @@ export class TmijsService {
         .join(channel)
         .then(data => {
           console.log(data);
+          return true;
         })
         .catch(err => {
           console.error(err);
+          return false;
         });
     }
   }
 
+  /**
+   * Leave channel.
+   *
+   * @param channel
+   */
+  leaveChannel(channel: string) {
+    if (this.client) {
+      this.client
+        .part(channel)
+        .then(data => {
+          console.log(data);
+          return true;
+        })
+        .catch(err => {
+          console.error(err);
+          return false;
+        });
+    }
+  }
+
+  /**
+   * Get channels.
+   *
+   */
   getChannels(): string[] {
     return this.client.getChannels();
   }
 
+  /**
+   * Clear messages
+   *
+   */
   clear() {
     this.messages = [];
   }

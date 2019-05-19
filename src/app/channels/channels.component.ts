@@ -7,6 +7,8 @@ import { TmijsService } from "../tmijs.service";
   styleUrls: ["./channels.component.scss"]
 })
 export class ChannelsComponent implements OnInit {
+  channel: string = "";
+
   constructor(public tmijsService: TmijsService) {}
 
   ngOnInit() {}

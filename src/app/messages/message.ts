@@ -17,5 +17,6 @@ export class Message {
   "user-type"?: "" | "mod" | "global_mod" | "admin" | "staff"; //'mod'
   "emotes-raw"?: string; //'25:0-4'
   "badges-raw"?: string; //'broadcaster/1,warcraft/horde'
-  "message-type": string; //'action'
+  "message-type"?: string; //'action'
+  channel?: string; //#starcraft
 }
