@@ -1,8 +1,14 @@
 import { Injectable } from "@angular/core";
 import { environment } from "../environments/environment";
-import TwitchClient, { AccessToken, User, Stream } from "twitch";
+import TwitchClient, {
+  AccessToken,
+  User,
+  Stream,
+  PrivilegedUser
+} from "twitch";
 import UserAPI from "twitch/lib/API/Kraken/User/UserAPI";
 import { client } from "tmi.js";
+import ChatBadgeList from "twitch/lib/API/Badges/ChatBadgeList";
 
 const clientId: string = environment.twitch_clientId;
 const accessToken: string = environment.twitch_access_token;
@@ -14,8 +20,9 @@ const refreshToken: string = environment.twitch_refresh_token;
 })
 export class TwitchapiService {
   twitchClient: TwitchClient;
-  user: User;
   followedLiveStreams: Array<Stream>;
+  user: PrivilegedUser;
+  globalBadgeList: ChatBadgeList;
 
   constructor() {
     TwitchClient.withCredentials(clientId, accessToken, undefined, {
@@ -36,6 +43,30 @@ export class TwitchapiService {
           .then(followedLiveChannels => {
             this.followedLiveStreams = followedLiveChannels;
             console.log(this.followedLiveStreams);
+          })
+          .catch(error => {
+            this.followedLiveStreams = null;
+            console.error(error);
+          });
+        this.twitchClient.users
+          .getMe()
+          .then(user => {
+            this.user = user;
+            console.log(this.user);
+          })
+          .catch(error => {
+            this.user = null;
+            console.error(error);
+          });
+        this.twitchClient.badges
+          .getGlobalBadges()
+          .then(globalbadges => {
+            this.globalBadgeList = globalbadges;
+            console.log(globalbadges);
+          })
+          .catch(error => {
+            this.globalBadgeList = null;
+            console.error(error);
           });
       })
       .catch(err => {
