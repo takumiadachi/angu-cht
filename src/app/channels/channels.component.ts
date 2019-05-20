@@ -6,6 +6,7 @@ import {
   FormBuilder,
   Validators
 } from "@angular/forms";
+import { TwitchapiService } from "../twitchapi.service";
 
 @Component({
   selector: "app-channels",
@@ -19,6 +20,7 @@ export class ChannelsComponent implements OnInit {
 
   constructor(
     private tmijsService: TmijsService,
+    private twitchapiService: TwitchapiService,
     private formBuilder: FormBuilder
   ) {}
 
@@ -42,7 +44,11 @@ export class ChannelsComponent implements OnInit {
     alert("SUCCESS!! :-)\n\n" + JSON.stringify(this.channelForm.value));
   }
 
-  getChannels() {
+  getJoinedChannels() {
     return this.tmijsService.getChannels();
+  }
+
+  getFollowedLiveStreams() {
+    return this.twitchapiService.followedLiveStreams;
   }
 }

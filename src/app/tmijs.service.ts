@@ -119,7 +119,7 @@ export class TmijsService {
         }
       });
       this.client.on("join", (channel, username, self) => {
-        console.log(`${username} joined ${channel}`);
+        // console.log(`${username} joined ${channel}`);
       });
       this.client.on("logon", () => {
         console.log(`You are logged in as ${this.client.getUsername()}`);

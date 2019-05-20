@@ -1,7 +1,12 @@
 <h2>Channels</h2>
+
+<div *ngFor="let stream of getFollowedLiveStreams()">
+  {{ stream.viewers }} {{ stream.game }} #{{ stream.channel.name }}
+</div>
+
 <form [formGroup]="channelForm" (ngSubmit)="onSubmit()">
   <label for="channel">Join Channel: </label>
   <input formControlName="channel" type="text" />
 </form>
 
-<div *ngFor="let channel of getChannels()">{{ channel }}</div>
+<div *ngFor="let channel of getJoinedChannels()">{{ channel }}</div>
