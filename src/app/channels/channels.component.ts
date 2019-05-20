@@ -18,7 +18,7 @@ export class ChannelsComponent implements OnInit {
   submitted: boolean = false;
 
   constructor(
-    public tmijsService: TmijsService,
+    private tmijsService: TmijsService,
     private formBuilder: FormBuilder
   ) {}
 
@@ -40,5 +40,9 @@ export class ChannelsComponent implements OnInit {
     }
 
     alert("SUCCESS!! :-)\n\n" + JSON.stringify(this.channelForm.value));
+  }
+
+  getChannels() {
+    return this.tmijsService.getChannels();
   }
 }
