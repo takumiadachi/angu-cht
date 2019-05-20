@@ -25,6 +25,7 @@
     "rxjs": "~6.3.3",
     "tmi.js": "^1.4.2",
     "tslib": "^1.9.0",
+    "twitch": "^2.2.3",
     "zone.js": "~0.8.26"
   },
   "devDependencies": {

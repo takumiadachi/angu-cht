@@ -4,12 +4,12 @@ import { Message } from "./messages/message";
 
 import * as tmi from "tmi.js";
 
-let username: string = environment.twitch_username;
-let password: string = environment.twitch_oauth_pass;
-let clientId: string = environment.tmijs_clientId;
+const username: string = environment.twitch_username;
+const password: string = environment.twitch_oauth_pass;
+const clientId: string = environment.twitch_clientId;
 
 let devOptions: tmi.Options = {
-  channels: ["#starcraft", "#PlayHearthstone"],
+  channels: ["#perpetualMM", "#Absnerdity"],
   connection: {
     maxReconnectAttempts: 2,
     maxReconnectInverval: 10,

@@ -7,7 +7,10 @@ export const environment = {
   name: name,
   twitch_username: "username",
   twitch_oauth_pass: "password",
-  tmijs_clientId: "clientid"
+  twitch_clientId: "clientid",
+  twitch_access_token: "access_token",
+  twitch_refresh_token: "refresh_token",
+  twitch_client_secret: "client_secret"
 };
 
 /*

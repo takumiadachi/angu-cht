@@ -1,4 +1,7 @@
 <h2>Channels</h2>
-<label for="channel">Join Channel: </label>
-<input [(ngModel)]="channel" placeholder="name" />
+<form [formGroup]="channelForm" (ngSubmit)="onSubmit()">
+  <label for="channel">Join Channel: </label>
+  <input formControlName="channel" type="text" />
+</form>
+
 <div *ngFor="let channel of tmijsService.getChannels()">{{ channel }}</div>
