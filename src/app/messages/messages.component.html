@@ -1,4 +1,9 @@
 <h2>Messages</h2>
+<form [formGroup]="messagesForm" (ngSubmit)="onSubmit()">
+  <label for="message">Message </label>
+  <input formControlName="message" type="text" [(ngModel)]="message" />
+</form>
+
 <div *ngFor="let message of tmijsService.messages">
   {{ message.channel }}
   {{ message.username }}:

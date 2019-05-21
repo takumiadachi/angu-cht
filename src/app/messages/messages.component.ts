@@ -1,5 +1,11 @@
 import { Component, OnInit } from "@angular/core";
 import { TmijsService } from "../tmijs.service";
+import {
+  FormGroup,
+  FormControl,
+  FormBuilder,
+  Validators
+} from "@angular/forms";
 
 @Component({
   selector: "app-messages",
@@ -7,7 +13,31 @@ import { TmijsService } from "../tmijs.service";
   styleUrls: ["./messages.component.scss"]
 })
 export class MessagesComponent implements OnInit {
-  constructor(public tmijsService: TmijsService) {}
+  messagesForm: FormGroup;
+  message: string = "";
 
-  ngOnInit() {}
+  constructor(
+    public tmijsService: TmijsService,
+    private formBuilder: FormBuilder
+  ) {}
+
+  ngOnInit() {
+    this.messagesForm = this.formBuilder.group(
+      {
+        message: ["", Validators.required]
+      },
+      {}
+    );
+  }
+
+  onSubmit() {
+    // stop here if form is invalid
+    if (this.messagesForm.invalid) {
+      return;
+    }
+
+    this.message = " "; // Clear the message after sending.
+
+    this.tmijsService.say("#absnerdity", this.messagesForm.value.message);
+  }
 }

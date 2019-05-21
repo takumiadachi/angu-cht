@@ -14,9 +14,8 @@ import { TwitchapiService } from "../twitchapi.service";
   styleUrls: ["./channels.component.scss"]
 })
 export class ChannelsComponent implements OnInit {
-  channelForm: FormGroup;
+  channelsForm: FormGroup;
   channel: string = "";
-  submitted: boolean = false;
 
   constructor(
     private tmijsService: TmijsService,
@@ -25,7 +24,7 @@ export class ChannelsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.channelForm = this.formBuilder.group(
+    this.channelsForm = this.formBuilder.group(
       {
         channel: ["", Validators.required]
       },
@@ -34,14 +33,12 @@ export class ChannelsComponent implements OnInit {
   }
 
   onSubmit() {
-    this.submitted = true;
-
     // stop here if form is invalid
-    if (this.channelForm.invalid) {
+    if (this.channelsForm.invalid) {
       return;
     }
 
-    alert("SUCCESS!! :-)\n\n" + JSON.stringify(this.channelForm.value));
+    this.tmijsService.joinChannel(this.channelsForm.value.channel);
   }
 
   getJoinedChannels() {

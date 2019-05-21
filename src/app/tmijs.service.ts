@@ -9,7 +9,7 @@ const password: string = environment.twitch_oauth_pass;
 const clientId: string = environment.twitch_clientId;
 
 let devOptions: tmi.Options = {
-  channels: ["#perpetualMM", "#Absnerdity"],
+  channels: ["#absnerdity"],
   connection: {
     maxReconnectAttempts: 2,
     maxReconnectInverval: 10,
@@ -46,6 +46,7 @@ let devOptions: tmi.Options = {
 export class TmijsService {
   messages: Message[] = [];
   client: tmi.Client;
+  currentChannel: string;
 
   constructor() {
     console.log(environment.name);
@@ -124,7 +125,45 @@ export class TmijsService {
       this.client.on("logon", () => {
         console.log(`You are logged in as ${this.client.getUsername()}`);
       });
+      this.client.on("connected", (address, port) => {
+        const m: Message = {
+          channel: `_root`,
+          message: `Connected to${address}:${port}`
+        };
+        this.addMessage(m);
+      });
+      this.client.on("disconnected", reason => {
+        let m: Message;
+        reason
+          ? (m = {
+              channel: `_root`,
+              message: `Disconnected. Reason: ${reason}`
+            })
+          : (m = {
+              channel: `_root`,
+              message: `Disconnected.`
+            });
+
+        this.addMessage(m);
+      });
     });
+  }
+
+  /**
+   * Send message to channel.
+   *
+   * @param channel
+   * @param message
+   */
+  say(channel: string, message: string) {
+    this.client
+      .say(channel, message)
+      .then(data => {
+        console.log(data);
+      })
+      .catch(err => {
+        console.error(err);
+      });
   }
 
   addMessage(message: Message) {
