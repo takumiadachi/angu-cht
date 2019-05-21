@@ -9,4 +9,13 @@
   <input formControlName="channel" type="text" />
 </form>
 
-<div *ngFor="let channel of getJoinedChannels()">{{ channel }}</div>
+<div *ngFor="let channel of getJoinedChannels()">
+  <input
+    type="radio"
+    [(ngModel)]="currentChannel"
+    [value]="channel"
+    (ngModelChange)="selectChannel()"
+  />
+  {{ channel }}
+</div>
+<div>{{ currentChannel }}</div>

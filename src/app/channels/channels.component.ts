@@ -16,6 +16,7 @@ import { TwitchapiService } from "../twitchapi.service";
 export class ChannelsComponent implements OnInit {
   channelsForm: FormGroup;
   channel: string = "";
+  currentChannel: string = "";
 
   constructor(
     private tmijsService: TmijsService,
@@ -39,6 +40,10 @@ export class ChannelsComponent implements OnInit {
     }
 
     this.tmijsService.joinChannel(this.channelsForm.value.channel);
+  }
+
+  selectChannel() {
+    this.tmijsService.setCurrentChannel(this.currentChannel);
   }
 
   getJoinedChannels() {

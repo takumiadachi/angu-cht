@@ -6,6 +6,7 @@ import {
   FormBuilder,
   Validators
 } from "@angular/forms";
+import { Message } from "./message";
 
 @Component({
   selector: "app-messages",
@@ -15,13 +16,15 @@ import {
 export class MessagesComponent implements OnInit {
   messagesForm: FormGroup;
   message: string = "";
+  messages: Array<Message>;
 
   constructor(
-    public tmijsService: TmijsService,
+    private tmijsService: TmijsService,
     private formBuilder: FormBuilder
   ) {}
 
   ngOnInit() {
+    this.messages = this.tmijsService.getMessages();
     this.messagesForm = this.formBuilder.group(
       {
         message: ["", Validators.required]
@@ -37,7 +40,7 @@ export class MessagesComponent implements OnInit {
     }
 
     this.tmijsService.say(
-      "#absnerdity",
+      this.tmijsService.currentChannel,
       this.messagesForm.get("message").value
     );
 

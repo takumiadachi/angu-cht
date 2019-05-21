@@ -9,7 +9,7 @@ const password: string = environment.twitch_oauth_pass;
 const clientId: string = environment.twitch_clientId;
 
 let devOptions: tmi.Options = {
-  channels: ["#absnerdity"],
+  channels: ["#perpetualMM", "#aquas"],
   connection: {
     maxReconnectAttempts: 2,
     maxReconnectInverval: 10,
@@ -44,9 +44,9 @@ let devOptions: tmi.Options = {
   providedIn: "root"
 })
 export class TmijsService {
-  messages: Message[] = [];
+  messages: Array<Message> = [];
   client: tmi.Client;
-  currentChannel: string;
+  currentChannel: string = "";
 
   constructor() {
     console.log(environment.name);
@@ -104,12 +104,12 @@ export class TmijsService {
         switch (userstate["message-type"]) {
           case "action":
             // This is an action message..
-            console.log(this.messages);
             this.addMessage(message);
+            console.log(this.messages);
             break;
           case "chat":
-            console.log(this.messages);
             this.addMessage(message);
+            console.log(this.messages);
             break;
           case "whisper":
             // This is a whisper..
@@ -120,7 +120,10 @@ export class TmijsService {
         }
       });
       this.client.on("join", (channel, username, self) => {
-        // console.log(`${username} joined ${channel}`);
+        if (this.client.getUsername() === username) {
+          !this.currentChannel ? (this.currentChannel = channel) : ""; // Set current channel to the first one joined on first connection.
+          console.log(`${username} (You) joined ${channel}`);
+        }
       });
       this.client.on("logon", () => {
         console.log(`You are logged in as ${this.client.getUsername()}`);
@@ -145,6 +148,14 @@ export class TmijsService {
             });
 
         this.addMessage(m);
+      });
+      this.client.on("hosted", (channel, username, viewers, autohost) => {
+        console.log(channel, username, viewers, autohost);
+        // Do your stuff.
+      });
+      this.client.on("hosting", (channel, target, viewers) => {
+        console.log(channel, target, viewers);
+        // Do your stuff.
       });
     });
   }
@@ -180,6 +191,7 @@ export class TmijsService {
       this.client
         .join(channel)
         .then(data => {
+          console.log(`Joined channel ${channel}.`);
           console.log(data);
           return true;
         })
@@ -200,7 +212,7 @@ export class TmijsService {
       this.client
         .part(channel)
         .then(data => {
-          console.log(data);
+          console.log(`Left channel ${channel}.`);
           return true;
         })
         .catch(err => {
@@ -216,6 +228,25 @@ export class TmijsService {
    */
   getChannels(): string[] {
     return this.client.getChannels();
+  }
+
+  /**
+   * Set current channel to chat in.
+   *
+   * @param channel
+   */
+  setCurrentChannel(channel: string): void {
+    this.currentChannel = channel;
+
+    console.log(this.currentChannel);
+  }
+
+  /**
+   * Get messages.
+   *
+   */
+  getMessages(): Array<Message> {
+    return this.messages;
   }
 
   /**

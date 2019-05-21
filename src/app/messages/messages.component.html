@@ -4,7 +4,7 @@
   <input formControlName="message" type="text" />
 </form>
 
-<div *ngFor="let message of tmijsService.messages">
+<div *ngFor="let message of messages">
   {{ message.channel }}
   {{ message.username }}:
   {{ message.message }}
