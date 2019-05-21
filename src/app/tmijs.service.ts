@@ -82,32 +82,32 @@ export class TmijsService {
       this.client.on("message", (channel, userstate, messageText, self) => {
         // Don't listen to my own messages..
         if (self) return;
-
+        let message: Message = {
+          badges: userstate["badges"],
+          color: userstate["color"],
+          "display-name": userstate["display-name"],
+          emotes: userstate["emotes"],
+          mod: userstate["mod"],
+          "room-id": userstate["room-id"],
+          subscriber: userstate["subscriber"],
+          turbo: userstate["turbo"],
+          "user-id": userstate["user-id"],
+          "user-type": userstate["user-type"],
+          "emotes-raw": userstate["emotes-raw"],
+          "badges-raw": userstate["badges-raw"],
+          "message-type": userstate["message-type"],
+          username: userstate["username"],
+          message: messageText,
+          channel: channel
+        };
         // Handle different message types..
         switch (userstate["message-type"]) {
           case "action":
             // This is an action message..
+            console.log(this.messages);
+            this.addMessage(message);
             break;
           case "chat":
-            // This is a chat message..
-            const message: Message = {
-              badges: userstate["badges"],
-              color: userstate["color"],
-              "display-name": userstate["display-name"],
-              emotes: userstate["emotes"],
-              mod: userstate["mod"],
-              "room-id": userstate["room-id"],
-              subscriber: userstate["subscriber"],
-              turbo: userstate["turbo"],
-              "user-id": userstate["user-id"],
-              "user-type": userstate["user-type"],
-              "emotes-raw": userstate["emotes-raw"],
-              "badges-raw": userstate["badges-raw"],
-              "message-type": userstate["message-type"],
-              username: userstate["username"],
-              message: messageText,
-              channel: channel
-            };
             console.log(this.messages);
             this.addMessage(message);
             break;

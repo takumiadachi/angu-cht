@@ -36,8 +36,11 @@ export class MessagesComponent implements OnInit {
       return;
     }
 
-    this.message = " "; // Clear the message after sending.
+    this.tmijsService.say(
+      "#absnerdity",
+      this.messagesForm.get("message").value
+    );
 
-    this.tmijsService.say("#absnerdity", this.messagesForm.value.message);
+    this.messagesForm.get("message").setValue(" ");
   }
 }
