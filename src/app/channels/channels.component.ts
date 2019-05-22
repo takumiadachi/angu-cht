@@ -52,7 +52,11 @@ export class ChannelsComponent implements OnInit {
     return this.tmijsService.getChannels();
   }
 
-  getFollowedLiveStreams() {
+  copy(value) {
+    console.log(value);
+  }
+
+  public getFollowedLiveStreams() {
     return this.twitchapiService.followedLiveStreams;
   }
 }

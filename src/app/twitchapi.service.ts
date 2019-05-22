@@ -20,7 +20,7 @@ const refreshToken: string = environment.twitch_refresh_token;
 })
 export class TwitchapiService {
   twitchClient: TwitchClient;
-  followedLiveStreams: Array<Stream>;
+  followedLiveStreams: Array<Stream> = null;
   user: PrivilegedUser;
   globalBadgeList: ChatBadgeList;
 
@@ -42,7 +42,7 @@ export class TwitchapiService {
           .getFollowedStreams()
           .then(followedLiveChannels => {
             this.followedLiveStreams = followedLiveChannels;
-            console.log(this.followedLiveStreams);
+            // console.log(this.followedLiveStreams);
           })
           .catch(error => {
             this.followedLiveStreams = null;
@@ -62,7 +62,7 @@ export class TwitchapiService {
           .getGlobalBadges()
           .then(globalbadges => {
             this.globalBadgeList = globalbadges;
-            console.log(globalbadges);
+            // console.log(globalbadges);
           })
           .catch(error => {
             this.globalBadgeList = null;

@@ -9,7 +9,7 @@ const password: string = environment.twitch_oauth_pass;
 const clientId: string = environment.twitch_clientId;
 
 let devOptions: tmi.Options = {
-  channels: ["#absnerdity", "#retrogradetom"],
+  channels: ["#landail", "#yagamoth"],
   connection: {
     maxReconnectAttempts: 2,
     maxReconnectInverval: 10,
@@ -105,11 +105,11 @@ export class TmijsService {
           case "action":
             // This is an action message..
             this.addMessage(message);
-            console.log(this.messages);
+            // console.log(this.messages); // Keep this commented unless you want to see a ton of messages.
             break;
           case "chat":
             this.addMessage(message);
-            console.log(this.messages);
+            // console.log(this.messages); // Keep this commented unless you want to see a ton of messages.
             break;
           case "whisper":
             // This is a whisper..

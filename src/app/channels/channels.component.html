@@ -1,7 +1,10 @@
 <h2>Channels</h2>
 
-<div *ngFor="let stream of getFollowedLiveStreams()">
-  {{ stream.viewers }} : #{{ stream.channel.name }} - {{ stream.game }}
+<div *ngFor="let stream of getFollowedLiveStreams(); let i = index">
+  <div (click)="copy(i.value)">{{ i }}#{{ stream.channel.name }}</div>
+</div>
+<div id="haveChannels" *ngIf="getFollowedLiveStreams()" class="hidden">
+  There are channels
 </div>
 
 <form [formGroup]="channelsForm" (ngSubmit)="onSubmit()">
