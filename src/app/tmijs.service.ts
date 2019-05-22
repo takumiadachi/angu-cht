@@ -9,7 +9,7 @@ const password: string = environment.twitch_oauth_pass;
 const clientId: string = environment.twitch_clientId;
 
 let devOptions: tmi.Options = {
-  channels: ["#perpetualMM", "#aquas"],
+  channels: ["#absnerdity", "#retrogradetom"],
   connection: {
     maxReconnectAttempts: 2,
     maxReconnectInverval: 10,

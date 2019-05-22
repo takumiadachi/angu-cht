@@ -1,5 +1,6 @@
 import { TestBed, async } from "@angular/core/testing";
 import { RouterTestingModule } from "@angular/router/testing";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { AppComponent } from "./app.component";
 import { MessagesComponent } from "./messages/messages.component";
 import { ChannelsComponent } from "./channels/channels.component";
@@ -7,7 +8,7 @@ import { ChannelsComponent } from "./channels/channels.component";
 describe("AppComponent", () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule],
+      imports: [RouterTestingModule, FormsModule, ReactiveFormsModule],
       declarations: [AppComponent, MessagesComponent, ChannelsComponent]
     }).compileComponents();
   }));

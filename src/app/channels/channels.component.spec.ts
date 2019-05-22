@@ -1,16 +1,16 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { ChannelsComponent } from "./channels.component";
 
-import { ChannelsComponent } from './channels.component';
-
-describe('ChannelsComponent', () => {
+describe("ChannelsComponent", () => {
   let component: ChannelsComponent;
   let fixture: ComponentFixture<ChannelsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ChannelsComponent ]
-    })
-    .compileComponents();
+      declarations: [ChannelsComponent],
+      imports: [FormsModule, ReactiveFormsModule]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -19,7 +19,7 @@ describe('ChannelsComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

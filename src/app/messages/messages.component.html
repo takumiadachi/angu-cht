@@ -2,6 +2,7 @@
 <form [formGroup]="messagesForm" (ngSubmit)="onSubmit()">
   <label for="message">Message </label>
   <input formControlName="message" type="text" />
+  {{ tmijsService.currentChannel }}
 </form>
 
 <div *ngFor="let message of messages">

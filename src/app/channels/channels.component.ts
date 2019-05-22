@@ -40,6 +40,8 @@ export class ChannelsComponent implements OnInit {
     }
 
     this.tmijsService.joinChannel(this.channelsForm.value.channel);
+
+    this.channelsForm.get("channel").setValue(" ");
   }
 
   selectChannel() {
