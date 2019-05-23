@@ -15,6 +15,14 @@ export class AuthService {
     return Cookies.getJSON("auth");
   }
 
+  getUsername() {
+    return Cookies.getJSON("auth").username;
+  }
+
+  getOAuth() {
+    return Cookies.getJSON("auth").oauth;
+  }
+
   /**
    * Clears cookies.
    */

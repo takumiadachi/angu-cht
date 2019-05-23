@@ -1,8 +1,5 @@
-<p>
-  login works!
-</p>
-<form (submit)="login($event)">
-  <input type="text" placeholder="username" id="username" />
-  <input type="text" placeholder="password" id="password" />
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+  <input type="text" placeholder="Username.." formControlName="username" />
+  <input type="text" placeholder="oAuth.." formControlName="username" />
   <input type="submit" />
 </form>

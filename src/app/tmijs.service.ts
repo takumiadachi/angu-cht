@@ -3,42 +3,7 @@ import { environment } from "../environments/environment";
 import { Message } from "./messages/message";
 
 import * as tmi from "tmi.js";
-
-const username: string = environment.twitch_username;
-const password: string = environment.twitch_oauth_pass;
-const clientId: string = environment.twitch_clientId;
-
-let devOptions: tmi.Options = {
-  channels: ["#absnerdity", "#landail"],
-  connection: {
-    maxReconnectAttempts: 2,
-    maxReconnectInverval: 10,
-    reconnect: true,
-    reconnectDecay: 20,
-    reconnectInterval: 10,
-    secure: true,
-    timeout: 20
-  },
-  identity: {
-    password: password,
-    username: username
-  },
-  logger: {
-    warn: message => {
-      console.log(message);
-    },
-    error: message => {
-      console.log(message);
-    },
-    info: message => {
-      // console.log(message);
-    }
-  },
-  options: {
-    clientId: clientId,
-    debug: true
-  }
-};
+import { AuthService } from "./auth.service";
 
 @Injectable({
   providedIn: "root"
@@ -48,8 +13,45 @@ export class TmijsService {
   client: tmi.Client;
   currentChannel: string = "";
 
-  constructor() {
-    console.log(environment.name);
+  constructor(private authService: AuthService) {}
+
+  start() {
+    let devOptions: tmi.Options = {
+      channels: ["#absnerdity", "#landail"],
+      connection: {
+        maxReconnectAttempts: 2,
+        maxReconnectInverval: 10,
+        reconnect: true,
+        reconnectDecay: 20,
+        reconnectInterval: 10,
+        secure: true,
+        timeout: 20
+      },
+      identity: {
+        username: this.authService.getUsername()
+          ? this.authService.getUsername()
+          : environment.twitch_username,
+        password: this.authService.getOAuth()
+          ? this.authService.getOAuth()
+          : environment.twitch_oauth_pass
+      },
+      logger: {
+        warn: message => {
+          console.log(message);
+        },
+        error: message => {
+          console.log(message);
+        },
+        info: message => {
+          // console.log(message);
+        }
+      },
+      options: {
+        clientId: environment.twitch_clientId,
+        debug: true
+      }
+    };
+
     switch (environment.name) {
       case "prod":
         this.client = tmi.Client({
@@ -158,6 +160,17 @@ export class TmijsService {
         // Do your stuff.
       });
     });
+  }
+
+  stop() {
+    this.client
+      .disconnect()
+      .then(data => {
+        console.log(data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 
   /**
