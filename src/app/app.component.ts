@@ -1,6 +1,4 @@
 import { Component } from "@angular/core";
-import { TmijsService } from "./tmijs.service";
-import { TwitchapiService } from "./twitchapi.service";
 
 @Component({
   selector: "app-root",
@@ -11,10 +9,7 @@ export class AppComponent {
   title: string = "angu-cht";
   channel: string = "";
 
-  constructor(
-    private tmijsService: TmijsService,
-    private twitchapiService: TwitchapiService
-  ) {
+  constructor() {
     // Called first time before the ngOnInit()
   }
 
