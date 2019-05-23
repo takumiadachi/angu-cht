@@ -16,15 +16,13 @@ import { Message } from "./message";
 export class MessagesComponent implements OnInit {
   messagesForm: FormGroup;
   message: string = "";
-  messages: Array<Message>;
 
   constructor(
-    private tmijsService: TmijsService,
+    public tmijsService: TmijsService,
     private formBuilder: FormBuilder
   ) {}
 
   ngOnInit() {
-    this.messages = this.tmijsService.getMessages();
     this.messagesForm = this.formBuilder.group(
       {
         message: ["", Validators.required]

@@ -6,8 +6,6 @@ import TwitchClient, {
   Stream,
   PrivilegedUser
 } from "twitch";
-import UserAPI from "twitch/lib/API/Kraken/User/UserAPI";
-import { client } from "tmi.js";
 import ChatBadgeList from "twitch/lib/API/Badges/ChatBadgeList";
 
 const clientId: string = environment.twitch_clientId;

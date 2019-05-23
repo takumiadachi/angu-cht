@@ -4,10 +4,23 @@
   <div class="modal-background"></div>
   <div class="modal-content">
     <!-- Any other Bulma elements you want -->
+    <form [formGroup]="channelsForm" (ngSubmit)="onSubmit()">
+      <label for="channel">Join Channel: </label>
+      <input formControlName="channel" type="text" />
+    </form>
     <div *ngFor="let stream of getFollowedLiveStreams()">
       <div (click)="copyTo(stream.channel.name, 'channel')">
         #{{ stream.channel.name }}
       </div>
+    </div>
+    <div *ngFor="let channel of getJoinedChannels()">
+      <input
+        type="radio"
+        [(ngModel)]="currentChannel"
+        [value]="channel"
+        (ngModelChange)="selectChannel()"
+      />
+      {{ channel }}
     </div>
   </div>
   <button
@@ -18,7 +31,7 @@
 </div>
 
 <button
-  class="button is-primary is-large modal-button"
+  class="button is-primary modal-button"
   data-target="modal"
   aria-haspopup="true"
   (click)="toggleShowChannels()"
@@ -29,19 +42,6 @@
 <div id="haveChannels" *ngIf="getFollowedLiveStreams()" class="hidden">
   There are channels
 </div>
-
-<form [formGroup]="channelsForm" (ngSubmit)="onSubmit()">
-  <label for="channel">Join Channel: </label>
-  <input formControlName="channel" type="text" />
-</form>
-
-<div *ngFor="let channel of getJoinedChannels()">
-  <input
-    type="radio"
-    [(ngModel)]="currentChannel"
-    [value]="channel"
-    (ngModelChange)="selectChannel()"
-  />
-  {{ channel }}
+<div id="haveCurrentChannel" class="hidden">
+  current channel{{ currentChannel }}
 </div>
-<div>{{ currentChannel }}</div>

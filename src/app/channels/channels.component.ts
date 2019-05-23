@@ -32,7 +32,6 @@ export class ChannelsComponent implements OnInit {
       },
       {}
     );
-    console.log(this.channelsForm);
   }
 
   onSubmit() {
