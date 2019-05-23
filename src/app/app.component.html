@@ -1,7 +1,14 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>Welcome to {{ title }}!</h1>
-</div>
-<app-channels></app-channels>
-<app-messages></app-messages>
-<router-outlet></router-outlet>
+<!DOCTYPE html>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<html>
+  <body>
+    <div class="container">
+      <h1 class="hidden">Welcome to {{ title }}!</h1>
+
+      <app-channels></app-channels>
+      <app-messages></app-messages>
+      <router-outlet></router-outlet>
+    </div>
+  </body>
+</html>

@@ -1,8 +1,31 @@
-<h2>Channels</h2>
+<h2 class="hidden">Channels</h2>
 
-<div *ngFor="let stream of getFollowedLiveStreams(); let i = index">
-  <div (click)="copy(i.value)">{{ i }}#{{ stream.channel.name }}</div>
+<div class="modal" [ngClass]="{ 'is-active': showChannels === true }">
+  <div class="modal-background"></div>
+  <div class="modal-content">
+    <!-- Any other Bulma elements you want -->
+    <div *ngFor="let stream of getFollowedLiveStreams()">
+      <div (click)="copyTo(stream.channel.name, 'channel')">
+        #{{ stream.channel.name }}
+      </div>
+    </div>
+  </div>
+  <button
+    class="modal-close is-large"
+    aria-label="close"
+    (click)="toggleShowChannels()"
+  ></button>
 </div>
+
+<button
+  class="button is-primary is-large modal-button"
+  data-target="modal"
+  aria-haspopup="true"
+  (click)="toggleShowChannels()"
+>
+  Launch example modal
+</button>
+
 <div id="haveChannels" *ngIf="getFollowedLiveStreams()" class="hidden">
   There are channels
 </div>

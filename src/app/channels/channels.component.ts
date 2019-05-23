@@ -17,6 +17,7 @@ export class ChannelsComponent implements OnInit {
   channelsForm: FormGroup;
   channel: string = "";
   currentChannel: string = "";
+  showChannels: boolean = false;
 
   constructor(
     private tmijsService: TmijsService,
@@ -31,6 +32,7 @@ export class ChannelsComponent implements OnInit {
       },
       {}
     );
+    console.log(this.channelsForm);
   }
 
   onSubmit() {
@@ -52,8 +54,20 @@ export class ChannelsComponent implements OnInit {
     return this.tmijsService.getChannels();
   }
 
-  copy(value) {
-    console.log(value);
+  copyTo(value: string, form: string) {
+    let payload = {};
+    payload[form] = value;
+    if (this.channelsForm) {
+      this.channelsForm.setValue(payload);
+    }
+  }
+
+  joinChannel(channel: string) {
+    this.tmijsService.joinChannel(channel);
+  }
+
+  toggleShowChannels() {
+    this.showChannels = !this.showChannels;
   }
 
   public getFollowedLiveStreams() {
