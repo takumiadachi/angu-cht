@@ -20,7 +20,7 @@ export class ChannelsComponent implements OnInit {
   showChannels: boolean = false;
 
   constructor(
-    private tmijsService: TmijsService,
+    public tmijsService: TmijsService,
     private twitchapiService: TwitchapiService,
     private formBuilder: FormBuilder
   ) {}

@@ -7,10 +7,15 @@ import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { MessagesComponent } from "./messages/messages.component";
 import { ChannelsComponent } from "./channels/channels.component";
-import { LoginComponent } from './login/login.component';
+import { LoginComponent } from "./login/login.component";
 
 @NgModule({
-  declarations: [AppComponent, MessagesComponent, ChannelsComponent, LoginComponent],
+  declarations: [
+    AppComponent,
+    MessagesComponent,
+    ChannelsComponent,
+    LoginComponent
+  ],
   imports: [BrowserModule, AppRoutingModule, FormsModule, ReactiveFormsModule],
   providers: [],
   bootstrap: [AppComponent]

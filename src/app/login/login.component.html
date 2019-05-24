@@ -1,5 +1,32 @@
-<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-  <input type="text" placeholder="Username.." formControlName="username" />
-  <input type="text" placeholder="oAuth.." formControlName="username" />
-  <input type="submit" />
-</form>
+<div *ngIf="!tmijsService.client" class="column">
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <div class="field">
+      <label class="label">Twitch Username</label>
+      <div class="control">
+        <input
+          type="text"
+          placeholder="Username.."
+          formControlName="username"
+        />
+      </div>
+    </div>
+    <div class="field">
+      <label class="label">Twitch oAuth Token</label>
+      <div class="control">
+        <input type="text" placeholder="oAuth.." formControlName="password" />
+      </div>
+    </div>
+    <div class="field">
+      <div class="control">
+        <a href="https://twitchapps.com/tmi/">Get Twitch oAuth Token Here</a>
+      </div>
+    </div>
+    <div class="field">
+      <div class="control">
+        <button class="button" type="submit">
+          Login
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

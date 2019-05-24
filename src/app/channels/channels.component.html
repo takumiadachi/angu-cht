@@ -1,47 +1,49 @@
-<h2 class="hidden">Channels</h2>
+<div *ngIf="tmijsService.client" class="column">
+  <h2 class="hidden">Channels</h2>
 
-<div class="modal" [ngClass]="{ 'is-active': showChannels === true }">
-  <div class="modal-background"></div>
-  <div class="modal-content">
-    <!-- Any other Bulma elements you want -->
-    <form [formGroup]="channelsForm" (ngSubmit)="onSubmit()">
-      <label for="channel">Join Channel: </label>
-      <input formControlName="channel" type="text" />
-    </form>
-    <div *ngFor="let stream of getFollowedLiveStreams()">
-      <div (click)="copyTo(stream.channel.name, 'channel')">
-        #{{ stream.channel.name }}
+  <div class="modal" [ngClass]="{ 'is-active': showChannels === true }">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+      <!-- Any other Bulma elements you want -->
+      <form [formGroup]="channelsForm" (ngSubmit)="onSubmit()">
+        <label for="channel">Join Channel: </label>
+        <input formControlName="channel" type="text" />
+      </form>
+      <div *ngFor="let stream of getFollowedLiveStreams()">
+        <div (click)="copyTo(stream.channel.name, 'channel')">
+          #{{ stream.channel.name }}
+        </div>
+      </div>
+      <div *ngFor="let channel of getJoinedChannels()">
+        <input
+          type="radio"
+          [(ngModel)]="currentChannel"
+          [value]="channel"
+          (ngModelChange)="selectChannel()"
+        />
+        {{ channel }}
       </div>
     </div>
-    <div *ngFor="let channel of getJoinedChannels()">
-      <input
-        type="radio"
-        [(ngModel)]="currentChannel"
-        [value]="channel"
-        (ngModelChange)="selectChannel()"
-      />
-      {{ channel }}
-    </div>
+    <button
+      class="modal-close is-large"
+      aria-label="close"
+      (click)="toggleShowChannels()"
+    ></button>
   </div>
+
   <button
-    class="modal-close is-large"
-    aria-label="close"
+    class="button is-primary modal-button"
+    data-target="modal"
+    aria-haspopup="true"
     (click)="toggleShowChannels()"
-  ></button>
-</div>
+  >
+    Launch example modal
+  </button>
 
-<button
-  class="button is-primary modal-button"
-  data-target="modal"
-  aria-haspopup="true"
-  (click)="toggleShowChannels()"
->
-  Launch example modal
-</button>
-
-<div id="haveChannels" *ngIf="getFollowedLiveStreams()" class="hidden">
-  There are channels
-</div>
-<div id="haveCurrentChannel" class="hidden">
-  current channel{{ currentChannel }}
+  <div id="haveChannels" *ngIf="getFollowedLiveStreams()" class="hidden">
+    There are channels
+  </div>
+  <div id="haveCurrentChannel" class="hidden">
+    current channel{{ currentChannel }}
+  </div>
 </div>

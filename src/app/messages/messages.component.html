@@ -1,16 +1,18 @@
-<h2 class="hidden">Messages</h2>
-<form [formGroup]="messagesForm" (ngSubmit)="onSubmit()">
-  <label for="message">Message </label>
-  <input formControlName="message" type="text" />
-  {{ tmijsService.currentChannel }}
-</form>
+<div *ngIf="tmijsService.client" class="column">
+  <h2 class="hidden">Messages</h2>
+  <form [formGroup]="messagesForm" (ngSubmit)="onSubmit()">
+    <label for="message">Message </label>
+    <input formControlName="message" type="text" />
+    {{ tmijsService.currentChannel }}
+  </form>
 
-<div *ngFor="let message of tmijsService.messages">
-  {{ message.channel }}
-  {{ message.username }}:
-  {{ message.message }}
-</div>
+  <div *ngFor="let message of tmijsService.messages">
+    {{ message.channel }}
+    {{ message.username }}:
+    {{ message.message }}
+  </div>
 
-<div id="haveMessages" *ngIf="tmijsService.messages" class="hidden">
-  There are messages
+  <div id="haveMessages" *ngIf="tmijsService.messages" class="hidden">
+    There are messages
+  </div>
 </div>

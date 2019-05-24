@@ -6,6 +6,10 @@ import {
   FormBuilder,
   Validators
 } from "@angular/forms";
+import { Router } from "@angular/router";
+import { environment } from "../../environments/environment";
+import { TmijsService } from "../tmijs.service";
+
 @Component({
   selector: "app-login",
   templateUrl: "./login.component.html",
@@ -15,31 +19,34 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
 
   constructor(
+    public tmijsService: TmijsService,
     private authService: AuthService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private router: Router
   ) {}
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group(
       {
-        username: ["", Validators.required],
-        password: ["", Validators.required]
+        username: [environment.twitch_username],
+        password: [environment.twitch_oauth_pass]
       },
       {}
     );
   }
 
-  login(event: any) {}
-
-  onSubmit() {
+  async onSubmit() {
     // stop here if form is invalid
     if (this.loginForm.invalid) {
       return;
     }
+
     const username = this.loginForm.get("username").value;
     const password = this.loginForm.get("password").value;
-    console.log(username, password);
+
     this.authService.setAuth(username, password);
-    console.log(this.authService.getCookies());
+    this.tmijsService.start().then(data => {
+      this.router.navigate(["/"]);
+    });
   }
 }

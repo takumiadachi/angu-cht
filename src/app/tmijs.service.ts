@@ -15,9 +15,9 @@ export class TmijsService {
 
   constructor(private authService: AuthService) {}
 
-  start() {
+  async start() {
     let devOptions: tmi.Options = {
-      channels: ["#absnerdity", "#landail"],
+      channels: ["#aquas", "2GD", "#metasigma"],
       connection: {
         maxReconnectAttempts: 2,
         maxReconnectInverval: 10,
@@ -30,10 +30,13 @@ export class TmijsService {
       identity: {
         username: this.authService.getUsername()
           ? this.authService.getUsername()
-          : environment.twitch_username,
+          : // : null,
+            environment.twitch_username,
+
         password: this.authService.getOAuth()
           ? this.authService.getOAuth()
-          : environment.twitch_oauth_pass
+          : // : null
+            environment.twitch_oauth_pass
       },
       logger: {
         warn: message => {
@@ -79,87 +82,93 @@ export class TmijsService {
         });
     }
 
-    this.client.connect().then(data => {
-      console.log(data);
-      this.client.on("message", (channel, userstate, messageText, self) => {
-        // Don't listen to my own messages..
-        if (self) return;
-        let message: Message = {
-          badges: userstate["badges"],
-          color: userstate["color"],
-          "display-name": userstate["display-name"],
-          emotes: userstate["emotes"],
-          mod: userstate["mod"],
-          "room-id": userstate["room-id"],
-          subscriber: userstate["subscriber"],
-          turbo: userstate["turbo"],
-          "user-id": userstate["user-id"],
-          "user-type": userstate["user-type"],
-          "emotes-raw": userstate["emotes-raw"],
-          "badges-raw": userstate["badges-raw"],
-          "message-type": userstate["message-type"],
-          username: userstate["username"],
-          message: messageText,
-          channel: channel
-        };
-        // Handle different message types..
-        switch (userstate["message-type"]) {
-          case "action":
-            // This is an action message..
-            this.addMessage(message);
-            // console.log(this.messages); // Keep this commented unless you want to see a ton of messages.
-            break;
-          case "chat":
-            this.addMessage(message);
-            // console.log(this.messages); // Keep this commented unless you want to see a ton of messages.
-            break;
-          case "whisper":
-            // This is a whisper..
-            break;
-          default:
-            // Something else ?
-            break;
-        }
-      });
-      this.client.on("join", (channel, username, self) => {
-        if (this.client.getUsername() === username) {
-          !this.currentChannel ? (this.currentChannel = channel) : ""; // Set current channel to the first one joined on first connection.
-          console.log(`${username} (You) joined ${channel}`);
-        }
-      });
-      this.client.on("logon", () => {
-        console.log(`You are logged in as ${this.client.getUsername()}`);
-      });
-      this.client.on("connected", (address, port) => {
-        const m: Message = {
-          channel: `_root`,
-          message: `Connected to${address}:${port}`
-        };
-        this.addMessage(m);
-      });
-      this.client.on("disconnected", reason => {
-        let m: Message;
-        reason
-          ? (m = {
-              channel: `_root`,
-              message: `Disconnected. Reason: ${reason}`
-            })
-          : (m = {
-              channel: `_root`,
-              message: `Disconnected.`
-            });
+    await this.client
+      .connect()
+      .then(data => {
+        this.client.on("message", (channel, userstate, messageText, self) => {
+          // Don't listen to my own messages..
+          if (self) return;
+          let message: Message = {
+            badges: userstate["badges"],
+            color: userstate["color"],
+            "display-name": userstate["display-name"],
+            emotes: userstate["emotes"],
+            mod: userstate["mod"],
+            "room-id": userstate["room-id"],
+            subscriber: userstate["subscriber"],
+            turbo: userstate["turbo"],
+            "user-id": userstate["user-id"],
+            "user-type": userstate["user-type"],
+            "emotes-raw": userstate["emotes-raw"],
+            "badges-raw": userstate["badges-raw"],
+            "message-type": userstate["message-type"],
+            username: userstate["username"],
+            message: messageText,
+            channel: channel
+          };
+          // Handle different message types..
+          switch (userstate["message-type"]) {
+            case "action":
+              // This is an action message..
+              this.addMessage(message);
+              // console.log(this.messages); // Keep this commented unless you want to see a ton of messages.
+              break;
+            case "chat":
+              this.addMessage(message);
+              // console.log(this.messages); // Keep this commented unless you want to see a ton of messages.
+              break;
+            case "whisper":
+              // This is a whisper..
+              break;
+            default:
+              // Something else ?
+              break;
+          }
+        });
+        this.client.on("join", (channel, username, self) => {
+          if (this.client.getUsername() === username) {
+            !this.currentChannel ? (this.currentChannel = channel) : ""; // Set current channel to the first one joined on first connection.
+            console.log(`${username} (You) joined ${channel}`);
+          }
+        });
+        this.client.on("logon", () => {
+          console.log(`You are logged in as ${this.client.getUsername()}`);
+        });
+        this.client.on("connected", (address, port) => {
+          const m: Message = {
+            channel: `_root`,
+            message: `Connected to${address}:${port}`
+          };
+          this.addMessage(m);
+        });
+        this.client.on("disconnected", reason => {
+          let m: Message;
+          reason
+            ? (m = {
+                channel: `_root`,
+                message: `Disconnected. Reason: ${reason}`
+              })
+            : (m = {
+                channel: `_root`,
+                message: `Disconnected.`
+              });
 
-        this.addMessage(m);
+          this.addMessage(m);
+        });
+        this.client.on("hosted", (channel, username, viewers, autohost) => {
+          console.log(channel, username, viewers, autohost);
+          // Do your stuff.
+        });
+        this.client.on("hosting", (channel, target, viewers) => {
+          console.log(channel, target, viewers);
+          // Do your stuff.
+        });
+        return data;
+      })
+      .catch(err => {
+        console.log(err);
+        return err;
       });
-      this.client.on("hosted", (channel, username, viewers, autohost) => {
-        console.log(channel, username, viewers, autohost);
-        // Do your stuff.
-      });
-      this.client.on("hosting", (channel, target, viewers) => {
-        console.log(channel, target, viewers);
-        // Do your stuff.
-      });
-    });
   }
 
   stop() {
@@ -183,6 +192,12 @@ export class TmijsService {
     this.client
       .say(channel, message)
       .then(data => {
+        const m: Message = {
+          channel: channel,
+          username: this.client.getUsername(),
+          message: message
+        };
+        this.messages.push(m);
         console.log(data);
       })
       .catch(err => {

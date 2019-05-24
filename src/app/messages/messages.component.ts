@@ -42,6 +42,6 @@ export class MessagesComponent implements OnInit {
       this.messagesForm.get("message").value
     );
 
-    this.messagesForm.get("message").setValue(" ");
+    this.messagesForm.get("message").setValue("");
   }
 }
