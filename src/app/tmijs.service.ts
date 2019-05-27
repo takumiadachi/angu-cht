@@ -14,11 +14,11 @@ export class TmijsService {
   currentChannel: string = "";
 
   constructor(private authService: AuthService) {
-    if (environment.name === "dev") {
-      this.start().then(data => {
-        console.log(data);
-      });
-    }
+    // if (environment.name === "dev") {
+    //   this.start().then(data => {
+    //     console.log(data);
+    //   });
+    // }
   }
 
   async start() {
