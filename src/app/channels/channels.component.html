@@ -1,19 +1,19 @@
-<div *ngIf="tmijsService.client" class="column">
+<div *ngIf="tmijsService.client">
   <h2 class="hidden">Channels</h2>
 
   <div class="modal" [ngClass]="{ 'is-active': showChannels === true }">
     <div class="modal-background"></div>
     <div class="modal-content">
       <!-- Any other Bulma elements you want -->
-      <form [formGroup]="channelsForm" (ngSubmit)="onSubmit()">
-        <label for="channel">Join Channel: </label>
-        <input formControlName="channel" type="text" />
-      </form>
       <div *ngFor="let stream of getFollowedLiveStreams()">
         <div (click)="copyTo(stream.channel.name, 'channel')">
           #{{ stream.channel.name }}
         </div>
       </div>
+      <form [formGroup]="channelsForm" (ngSubmit)="onSubmit()">
+        <label for="channel">Join Channel: </label>
+        <input formControlName="channel" type="text" />
+      </form>
       <div *ngFor="let channel of getJoinedChannels()">
         <input
           type="radio"

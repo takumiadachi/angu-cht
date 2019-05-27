@@ -8,13 +8,15 @@ import { AppComponent } from "./app.component";
 import { MessagesComponent } from "./messages/messages.component";
 import { ChannelsComponent } from "./channels/channels.component";
 import { LoginComponent } from "./login/login.component";
+import { RootComponent } from './root/root.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MessagesComponent,
     ChannelsComponent,
-    LoginComponent
+    LoginComponent,
+    RootComponent
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule, ReactiveFormsModule],
   providers: [],

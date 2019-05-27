@@ -1,12 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { TmijsService } from "../tmijs.service";
-import {
-  FormGroup,
-  FormControl,
-  FormBuilder,
-  Validators
-} from "@angular/forms";
-import { Message } from "./message";
+import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 
 @Component({
   selector: "app-messages",

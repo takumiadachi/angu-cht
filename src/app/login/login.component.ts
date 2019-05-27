@@ -46,7 +46,7 @@ export class LoginComponent implements OnInit {
 
     this.authService.setAuth(username, password);
     this.tmijsService.start().then(data => {
-      this.router.navigate(["/"]);
+      this.router.navigate(["/client"]);
     });
   }
 }

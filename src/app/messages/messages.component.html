@@ -1,4 +1,4 @@
-<div *ngIf="tmijsService.client" class="column">
+<div *ngIf="tmijsService.client">
   <h2 class="hidden">Messages</h2>
   <form [formGroup]="messagesForm" (ngSubmit)="onSubmit()">
     <label for="message">Message </label>
