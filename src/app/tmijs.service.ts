@@ -14,16 +14,16 @@ export class TmijsService {
   currentChannel: string = "";
 
   constructor(private authService: AuthService) {
-    // if (environment.name === "dev") {
-    //   this.start().then(data => {
-    //     console.log(data);
-    //   });
-    // }
+    if (environment.name === "dev") {
+      this.start().then(data => {
+        console.log(data);
+      });
+    }
   }
 
   async start() {
     let devOptions: tmi.Options = {
-      channels: ["#macaw45"],
+      channels: ["#goati_"],
       connection: {
         maxReconnectAttempts: 2,
         maxReconnectInverval: 10,

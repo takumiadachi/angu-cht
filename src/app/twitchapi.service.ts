@@ -1,11 +1,6 @@
 import { Injectable } from "@angular/core";
 import { environment } from "../environments/environment";
-import TwitchClient, {
-  AccessToken,
-  User,
-  Stream,
-  PrivilegedUser
-} from "twitch";
+import TwitchClient, { AccessToken, Stream, PrivilegedUser } from "twitch";
 import ChatBadgeList from "twitch/lib/API/Badges/ChatBadgeList";
 
 const clientId: string = environment.twitch_clientId;
