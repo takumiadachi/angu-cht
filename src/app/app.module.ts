@@ -6,7 +6,12 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import {
   MatButtonModule,
   MatCheckboxModule,
-  MatRadioModule
+  MatRadioModule,
+  MatListModule,
+  MatSidenavModule,
+  MatCardModule,
+  MatFormFieldModule,
+  MatInputModule
 } from "@angular/material";
 
 import { AppRoutingModule } from "./app-routing.module";
@@ -32,7 +37,12 @@ import { RootComponent } from "./root/root.component";
     BrowserAnimationsModule,
     MatButtonModule,
     MatCheckboxModule,
-    MatRadioModule
+    MatRadioModule,
+    MatListModule,
+    MatSidenavModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
   exports: [],
   providers: [],

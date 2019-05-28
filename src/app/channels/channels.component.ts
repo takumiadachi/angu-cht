@@ -1,10 +1,13 @@
 import { Component, OnInit } from "@angular/core";
 import { TmijsService } from "../tmijs.service";
+import { ErrorStateMatcher } from "@angular/material";
 import {
   FormGroup,
-  FormControl,
   FormBuilder,
-  Validators
+  Validators,
+  FormControl,
+  FormGroupDirective,
+  NgForm
 } from "@angular/forms";
 
 import { TwitchapiService } from "../twitchapi.service";
@@ -19,6 +22,7 @@ export class ChannelsComponent implements OnInit {
   channel: string = "";
   currentChannel: string = "";
   showChannels: boolean = false;
+  matcher = new MyErrorStateMatcher();
 
   constructor(
     public tmijsService: TmijsService,
@@ -29,7 +33,8 @@ export class ChannelsComponent implements OnInit {
   ngOnInit() {
     this.channelsForm = this.formBuilder.group(
       {
-        channel: ["", Validators.required]
+        // channel: ["", Validators.required]
+        channel: []
       },
       {}
     );
@@ -72,5 +77,20 @@ export class ChannelsComponent implements OnInit {
 
   public getFollowedLiveStreams() {
     return this.twitchapiService.followedLiveStreams;
+  }
+}
+
+/** Error when invalid control is dirty, touched, or submitted. */
+export class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(
+    control: FormControl | null,
+    form: FormGroupDirective | NgForm | null
+  ): boolean {
+    const isSubmitted = form && form.submitted;
+    return !!(
+      control &&
+      control.invalid &&
+      (control.dirty || control.touched || isSubmitted)
+    );
   }
 }

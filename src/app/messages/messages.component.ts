@@ -19,7 +19,8 @@ export class MessagesComponent implements OnInit {
   ngOnInit() {
     this.messagesForm = this.formBuilder.group(
       {
-        message: ["", Validators.required]
+        // message: ["", Validators.required]
+        message: []
       },
       {}
     );

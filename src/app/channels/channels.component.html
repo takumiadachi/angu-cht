@@ -1,28 +1,26 @@
 <div *ngIf="tmijsService.client">
   <h2 class="hidden">Channels</h2>
 
-  <div *ngFor="let stream of getFollowedLiveStreams()">
-    <div (click)="copyTo(stream.channel.name, 'channel')">
+  <mat-list role="list" class="margins">
+    <mat-list-item *ngFor="let stream of getFollowedLiveStreams()" (click)="copyTo(stream.channel.name, 'channel')">
       #{{ stream.channel.name }}
-    </div>
-  </div>
+    </mat-list-item>
+  </mat-list>
 
-  <form [formGroup]="channelsForm" (ngSubmit)="onSubmit()">
-    <label for="channel">Join Channel: </label>
-    <input formControlName="channel" type="text" />
+  <form [formGroup]="channelsForm" (ngSubmit)="onSubmit()" class="channel-form">
+    <mat-form-field class="full-width">
+      <input matInput [formControl]="channel" placeholder="Join Channel" type="text" [errorStateMatcher]="matcher">
+    </mat-form-field>
     <button mat-button name="submit" value="Submit">Join</button>
   </form>
 
-  <div *ngFor="let channel of getJoinedChannels()">
-    <mat-radio-button [(ngModel)]="currentChannel" (ngModelChange)="selectChannel()">
+  <mat-radio-group aria-label="Select a Channel to Send Messages" class="channel-select-form">
+    <mat-radio-button (ngModelChange)="selectChannel()" *ngFor="let channel of getJoinedChannels()" value="{{channel}}">
       {{ channel }}
     </mat-radio-button>
-  </div>
+  </mat-radio-group>
 
-  <!-- <button (click)="toggleShowChannels()">
-    Launch example modal
-  </button> -->
-
+  <!-- Tests -->
   <div id="haveChannels" *ngIf="getFollowedLiveStreams()" class="hidden">
     There are channels
   </div>
