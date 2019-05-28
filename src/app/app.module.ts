@@ -3,7 +3,11 @@ import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { ReactiveFormsModule } from "@angular/forms";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { MatButtonModule, MatCheckboxModule } from "@angular/material";
+import {
+  MatButtonModule,
+  MatCheckboxModule,
+  MatRadioModule
+} from "@angular/material";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
@@ -27,8 +31,10 @@ import { RootComponent } from "./root/root.component";
     ReactiveFormsModule,
     BrowserAnimationsModule,
     MatButtonModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatRadioModule
   ],
+  exports: [],
   providers: [],
   bootstrap: [AppComponent]
 })

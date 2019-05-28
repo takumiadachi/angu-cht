@@ -14,13 +14,9 @@
   </form>
 
   <div *ngFor="let channel of getJoinedChannels()">
-    <input
-      type="radio"
-      [(ngModel)]="currentChannel"
-      [value]="channel"
-      (ngModelChange)="selectChannel()"
-    />
-    {{ channel }}
+    <mat-radio-button [(ngModel)]="currentChannel" (ngModelChange)="selectChannel()">
+      {{ channel }}
+    </mat-radio-button>
   </div>
 
   <!-- <button (click)="toggleShowChannels()">
