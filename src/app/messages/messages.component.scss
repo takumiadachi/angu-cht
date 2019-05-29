@@ -1,8 +1,10 @@
-#message-container {
-  overflow-x: hidden;
-}
-
 .message-form {
+  min-width: 1px;
+  min-height: 1px;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  z-index: 9999;
   margin: 20px;
 }
 
@@ -11,5 +13,6 @@
 }
 
 .message-cards {
+  display: block;
   margin: 5px;
 }

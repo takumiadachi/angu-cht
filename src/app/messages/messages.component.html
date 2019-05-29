@@ -1,19 +1,21 @@
-<div *ngIf="tmijsService.client" id="message-container">
+<div *ngIf="tmijsService.client">
   <h2 class="hidden">Messages</h2>
-  <form [formGroup]="messagesForm" (ngSubmit)="onSubmit()" class="message-form">
-    <!-- <label for="message">Message </label>
+  <div class="message-form">
+    <form [formGroup]="messagesForm" (ngSubmit)="onSubmit()">
+      <!-- <label for="message">Message </label>
     <input type="text" /> -->
-    <mat-form-field class="message-full-width">
-      <input formControlName="message" matInput placeholder="{{this.tmijsService.currentChannel}}">
-    </mat-form-field>
-  </form>
-
-  <mat-card *ngFor="let message of tmijsService.messages" class="message-cards">
-    {{ message.channel }}
-    {{ message.username }}:
-    {{ message.message }}
-  </mat-card>
-
+      <mat-form-field appearance="outline" class="message-full-width">
+        <input formControlName="message" matInput placeholder="{{this.tmijsService.currentChannel}}">
+      </mat-form-field>
+    </form>
+  </div>
+  <div class="message-cards">
+    <mat-card *ngFor="let message of tmijsService.messages" class="message-cards">
+      {{ message.channel }}
+      {{ message.username }}:
+      {{ message.message }}
+    </mat-card>
+  </div>
   <div id="haveMessages" *ngIf="tmijsService.messages" class="hidden">
     There are messages
   </div>

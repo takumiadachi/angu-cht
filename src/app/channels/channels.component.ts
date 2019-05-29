@@ -20,7 +20,6 @@ import { TwitchapiService } from "../twitchapi.service";
 export class ChannelsComponent implements OnInit {
   channelsForm: FormGroup;
   channel: string = "";
-  currentChannel: string = "";
   showChannels: boolean = false;
   matcher = new MyErrorStateMatcher();
 
@@ -51,8 +50,8 @@ export class ChannelsComponent implements OnInit {
     this.channelsForm.get("channel").setValue(" ");
   }
 
-  selectChannel() {
-    this.tmijsService.setCurrentChannel(this.currentChannel);
+  selectChannel(channel: string) {
+    this.tmijsService.setCurrentChannel(channel);
   }
 
   getJoinedChannels() {
@@ -75,7 +74,7 @@ export class ChannelsComponent implements OnInit {
     this.showChannels = !this.showChannels;
   }
 
-  public getFollowedLiveStreams() {
+  getFollowedLiveStreams() {
     return this.twitchapiService.followedLiveStreams;
   }
 }

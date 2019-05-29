@@ -14,16 +14,16 @@ export class TmijsService {
   currentChannel: string = "";
 
   constructor(private authService: AuthService) {
-    if (environment.name === "dev") {
-      this.start().then(data => {
-        console.log(data);
-      });
-    }
+    // if (environment.name === "dev") {
+    //   this.start().then(data => {
+    //     console.log(data);
+    //   });
+    // }
   }
 
   async start() {
     let devOptions: tmi.Options = {
-      channels: ["#goati_"],
+      channels: ["#goati_", "#perpetualmm"],
       connection: {
         maxReconnectAttempts: 2,
         maxReconnectInverval: 10,
@@ -169,6 +169,7 @@ export class TmijsService {
           console.log(channel, target, viewers);
           // Do your stuff.
         });
+        console.log(data);
         return data;
       })
       .catch(err => {
@@ -271,8 +272,6 @@ export class TmijsService {
    */
   setCurrentChannel(channel: string): void {
     this.currentChannel = channel;
-
-    console.log(this.currentChannel);
   }
 
   /**

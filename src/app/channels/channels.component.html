@@ -1,30 +1,37 @@
 <div *ngIf="tmijsService.client">
   <h2 class="hidden">Channels</h2>
 
-  <mat-list role="list" class="margins">
-    <mat-list-item *ngFor="let stream of getFollowedLiveStreams()" (click)="copyTo(stream.channel.name, 'channel')">
-      #{{ stream.channel.name }}
-    </mat-list-item>
-  </mat-list>
+  <div class="channel-form">
+    <form [formGroup]="channelsForm" (ngSubmit)="onSubmit()">
+      <mat-form-field class="full-width">
+        <input formControlName="channel" matInput placeholder="Join Channel" type="text" [errorStateMatcher]="matcher">
+      </mat-form-field>
+      <button id="join" mat-raised-button name="submit" value="Submit" class="button">Join</button>
+    </form>
+    <mat-radio-group aria-label="Select a Channel to Send Messages">
+      <mat-radio-button (change)="selectChannel(channel)" *ngFor="let channel of getJoinedChannels()"
+        class="channel-select-item" value="{{channel}}">
+        <span class="channel-select-item-text">{{ channel }}</span>
+      </mat-radio-button>
+    </mat-radio-group>
+  </div>
 
-  <form [formGroup]="channelsForm" (ngSubmit)="onSubmit()" class="channel-form">
-    <mat-form-field class="full-width">
-      <input matInput [formControl]="channel" placeholder="Join Channel" type="text" [errorStateMatcher]="matcher">
-    </mat-form-field>
-    <button mat-button name="submit" value="Submit">Join</button>
-  </form>
+  <!-- <div class="channel-select-form">
 
-  <mat-radio-group aria-label="Select a Channel to Send Messages" class="channel-select-form">
-    <mat-radio-button (ngModelChange)="selectChannel()" *ngFor="let channel of getJoinedChannels()" value="{{channel}}">
-      {{ channel }}
-    </mat-radio-button>
-  </mat-radio-group>
+  </div> -->
+  <div class="channel-list">
+    <mat-list role="list" class="no-margins">
+      <mat-list-item *ngFor="let stream of getFollowedLiveStreams()" (click)="copyTo(stream.channel.name, 'channel')"
+        class="no-margins channel-list-item">
+        #{{ stream.channel.name }}
+      </mat-list-item>
+    </mat-list>
+  </div>
+
+
 
   <!-- Tests -->
   <div id="haveChannels" *ngIf="getFollowedLiveStreams()" class="hidden">
     There are channels
-  </div>
-  <div id="haveCurrentChannel" class="hidden">
-    current channel{{ currentChannel }}
   </div>
 </div>
