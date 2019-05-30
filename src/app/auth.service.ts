@@ -1,6 +1,5 @@
 import { Injectable } from "@angular/core";
 import Cookies from "js-cookie";
-import crypto from "crypto";
 
 @Injectable({
   providedIn: "root"
