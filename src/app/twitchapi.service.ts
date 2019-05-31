@@ -4,7 +4,6 @@ import TwitchClient, { AccessToken, Stream, PrivilegedUser } from "twitch";
 import ChatBadgeList from "twitch/lib/API/Badges/ChatBadgeList";
 
 const clientId: string = environment.twitch_clientId;
-const accessToken: string = environment.twitch_access_token;
 const clientSecret: string = environment.twitch_client_secret;
 const refreshToken: string = environment.twitch_refresh_token;
 
@@ -18,6 +17,11 @@ export class TwitchapiService {
   globalBadgeList: ChatBadgeList;
 
   constructor() {
+    // dev
+    this.start(environment.twitch_access_token);
+  }
+
+  start(accessToken: string) {
     TwitchClient.withCredentials(clientId, accessToken, undefined, {
       clientSecret,
       refreshToken,

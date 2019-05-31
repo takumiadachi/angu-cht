@@ -47,3 +47,6 @@ Thumbs.db
 
 # ignore environment.dev.ts
 src/environments/environment.dev.ts
+
+# ignore scratchpad.tsx
+scratchpad.tsx

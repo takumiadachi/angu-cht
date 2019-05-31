@@ -14,16 +14,14 @@ export class TmijsService {
   currentChannel: string = "";
 
   constructor(private authService: AuthService) {
-    // if (environment.name === "dev") {
-    //   this.start().then(data => {
-    //     console.log(data);
-    //   });
-    // }
+    this.start().then(data => {
+      console.log(data);
+    });
   }
 
   async start() {
     let devOptions: tmi.Options = {
-      channels: ["#goati_", "#perpetualmm"],
+      channels: ["#goati_", "#perpetualmm", "#absnerdity"],
       connection: {
         maxReconnectAttempts: 2,
         maxReconnectInverval: 10,

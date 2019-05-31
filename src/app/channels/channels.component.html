@@ -21,8 +21,9 @@
   </div> -->
   <div class="channel-list">
     <mat-list role="list" class="no-margins">
-      <mat-list-item *ngFor="let stream of getFollowedLiveStreams()" (click)="copyTo(stream.channel.name, 'channel')"
-        class="no-margins channel-list-item">
+      <mat-list-item *ngFor="let stream of getFollowedLiveStreams(); let index=index; let odd=odd; let even=even"
+        (click)="copyTo(stream.channel.name, 'channel')" class="no-margins channel-list-item"
+        [ngClass]="{odd: odd, even: even}">
         #{{ stream.channel.name }}
       </mat-list-item>
     </mat-list>

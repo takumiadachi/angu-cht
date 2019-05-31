@@ -1,4 +1,5 @@
 import { BrowserModule } from "@angular/platform-browser";
+import { HttpClientModule } from "@angular/common/http";
 import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { ReactiveFormsModule } from "@angular/forms";
@@ -31,6 +32,8 @@ import { RootComponent } from "./root/root.component";
   ],
   imports: [
     BrowserModule,
+    // import HttpClientModule after BrowserModule.
+    HttpClientModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
