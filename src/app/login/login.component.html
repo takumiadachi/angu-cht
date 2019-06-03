@@ -1,4 +1,5 @@
 <div *ngIf="!tmijsService.client" class="column">
+  <!-- Use access token instead of tmijsService.client-->
   <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
     <div class="field">
       <label class="label">Twitch Username</label>

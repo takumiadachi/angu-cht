@@ -21,6 +21,7 @@ import { MessagesComponent } from "./messages/messages.component";
 import { ChannelsComponent } from "./channels/channels.component";
 import { LoginComponent } from "./login/login.component";
 import { RootComponent } from "./root/root.component";
+import { LogoutComponent } from './logout/logout.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { RootComponent } from "./root/root.component";
     MessagesComponent,
     ChannelsComponent,
     LoginComponent,
-    RootComponent
+    RootComponent,
+    LogoutComponent
   ],
   imports: [
     BrowserModule,

@@ -18,7 +18,7 @@ export class TwitchapiService {
 
   constructor() {
     // dev
-    this.start(environment.twitch_access_token);
+    // this.start(environment.twitch_access_token);
   }
 
   start(accessToken: string) {

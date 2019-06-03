@@ -14,9 +14,9 @@ export class TmijsService {
   currentChannel: string = "";
 
   constructor(private authService: AuthService) {
-    this.start().then(data => {
-      console.log(data);
-    });
+    // this.start().then(data => {
+    //   console.log(data);
+    // });
   }
 
   async start() {
@@ -171,7 +171,7 @@ export class TmijsService {
         return data;
       })
       .catch(err => {
-        console.log(err);
+        console.error(err);
         return err;
       });
   }

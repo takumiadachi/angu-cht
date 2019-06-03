@@ -12,15 +12,17 @@ const OAUTH_VALIDATE: string = "validate";
   providedIn: "root"
 })
 export class AuthService {
+  AUTH: string = "auth";
+
   constructor() {}
 
   setAuth(
     username?: string,
+    access_token?: string,
     oauth?: string,
-    nonce?: string,
-    access_token?: string
+    nonce?: string
   ) {
-    Cookies.set("auth", {
+    Cookies.set(this.AUTH, {
       username: username,
       oauth: oauth,
       nonce: nonce,
@@ -29,23 +31,31 @@ export class AuthService {
   }
 
   getCookies() {
-    return Cookies.getJSON("auth");
+    return Cookies.getJSON(this.AUTH) ? Cookies.getJSON(this.AUTH) : undefined;
   }
 
   getUsername() {
-    return Cookies.getJSON("auth").username;
+    return Cookies.getJSON(this.AUTH)
+      ? Cookies.getJSON(this.AUTH).username
+      : undefined;
   }
 
   getOAuth() {
-    return Cookies.getJSON("auth").oauth;
+    return Cookies.getJSON(this.AUTH)
+      ? Cookies.getJSON(this.AUTH).oauth
+      : undefined;
   }
 
   getNonce() {
-    return Cookies.getJSON("auth").nonce;
+    return Cookies.getJSON(this.AUTH)
+      ? Cookies.getJSON(this.AUTH).nonce
+      : undefined;
   }
 
   getAccessToken() {
-    return Cookies.getJSON("auth").access_token;
+    return Cookies.getJSON(this.AUTH)
+      ? Cookies.getJSON(this.AUTH).access_token
+      : undefined;
   }
 
   generateNonce(stringLength) {
@@ -86,12 +96,41 @@ export class AuthService {
           const valid = response.status === 200 ? true : false;
           const data = response.data;
           const res = { valid: valid, data: data };
-
-          resolve(true);
+          resolve(valid);
         })
         .catch(error => {
-          console.log(`[${access_token}]. Token is invalid or does not exist.`);
-          resolve(false);
+          console.error(
+            `[${access_token}]. Token is invalid or does not exist.`
+          );
+          resolve(error);
+        });
+    });
+
+    return promise;
+  }
+
+  /**
+   * Get a Twitch user object of the access token. Useful for getting user name and email.
+   */
+  getUserObject(access_token?: string): Promise<any> {
+    let promise = new Promise(resolve => {
+      axios({
+        method: "get",
+        url: `https://api.twitch.tv/kraken/user/`,
+        headers: {
+          Authorization: `OAuth ${
+            access_token ? access_token : this.getAccessToken()
+          }`,
+          Accept: `application/vnd.twitchtv.v5+json`,
+          "Client-ID": `v46986rq8azaksvs007x1jtowesv4d`
+        }
+      })
+        .then(response => {
+          resolve(response);
+        })
+        .catch(error => {
+          console.error(error);
+          resolve(error);
         });
     });
 
@@ -116,17 +155,24 @@ export class AuthService {
       })
         .then(response => {
           console.log(`${access_token} successfully revoked.`);
-          resolve(true);
+          resolve(response);
         })
         .catch(error => {
-          console.log(`[${access_token}]. Token is invalid or does not exist.`);
-          resolve(false);
+          console.error(
+            `[${access_token}]. Token is invalid or does not exist.`
+          );
+          resolve(error);
         });
     });
 
     return promise;
   }
 
+  /**
+   * Generate a Twitch login URL to get a access token.
+   *
+   * @param nonce
+   */
   generateAccessTokenURL(nonce?: string) {
     return `${OAUTH_URL}${OAUTH_AUTHORIZE}
 ?client_id=${environment.twitch_clientId}
