@@ -1,6 +1,6 @@
 <div *ngIf="!tmijsService.client" class="column">
   <!-- Use access token instead of tmijsService.client-->
-  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+  <!-- <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
     <div class="field">
       <label class="label">Twitch Username</label>
       <div class="control">
@@ -25,8 +25,8 @@
         </button>
       </div>
     </div>
-  </form>
+  </form> -->
 
-  <a href="{{accessTokenUrl}}">Alternative Login</a>
+  <a href="{{accessTokenUrl}}">Login</a>
 
 </div>

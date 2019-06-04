@@ -178,7 +178,7 @@ export class AuthService {
 ?client_id=${environment.twitch_clientId}
 &redirect_uri=${environment.twitch_redirect_uri}
 &response_type=token
-&scope=user_read
+&scope=chat%3Aread+chat%3Aedit+channel%3Amoderate+whispers%3Aread+whispers%3Aedit+channel_editor+user_read
 &nonce=${nonce}`;
   }
 }

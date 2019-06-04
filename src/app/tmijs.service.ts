@@ -12,6 +12,7 @@ export class TmijsService {
   messages: Array<Message> = [];
   client: tmi.Client;
   currentChannel: string = "";
+  on: boolean = false;
 
   constructor(private authService: AuthService) {
     // this.start().then(data => {
@@ -37,8 +38,8 @@ export class TmijsService {
           : // : null,
             environment.twitch_username,
 
-        password: this.authService.getOAuth()
-          ? this.authService.getOAuth()
+        password: this.authService.getAccessToken()
+          ? `oauth:${this.authService.getAccessToken()}`
           : // : null
             environment.twitch_oauth_pass
       },
@@ -89,6 +90,7 @@ export class TmijsService {
     await this.client
       .connect()
       .then(data => {
+        this.on = true;
         this.client.on("message", (channel, userstate, messageText, self) => {
           // Don't listen to my own messages..
           if (self) return;
@@ -172,6 +174,7 @@ export class TmijsService {
       })
       .catch(err => {
         console.error(err);
+        this.on = false;
         return err;
       });
   }
@@ -181,9 +184,11 @@ export class TmijsService {
       .disconnect()
       .then(data => {
         console.log(data);
+        this.on = false;
       })
       .catch(err => {
         console.log(err);
+        this.on = false;
       });
   }
 

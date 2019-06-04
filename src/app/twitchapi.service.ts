@@ -15,6 +15,7 @@ export class TwitchapiService {
   followedLiveStreams: Array<Stream> = null;
   user: PrivilegedUser;
   globalBadgeList: ChatBadgeList;
+  on: boolean = false;
 
   constructor() {
     // dev
@@ -33,7 +34,7 @@ export class TwitchapiService {
     })
       .then(client => {
         this.twitchClient = client;
-        // console.log(data);
+        this.on = true;
         console.log(this.twitchClient);
         this.twitchClient.kraken.streams
           .getFollowedStreams()
@@ -68,6 +69,7 @@ export class TwitchapiService {
       })
       .catch(err => {
         console.error(err);
+        this.on = false;
       });
   }
 }

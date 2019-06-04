@@ -25,6 +25,14 @@ export class RootComponent implements OnInit {
         if (valid_access_token) {
           // this.router.navigate(["/login"]);
           // We're great, do nothing.
+          console.log(valid_access_token);
+          console.log(this.authService.getCookies());
+          if (this.tmijsService.on === false) {
+            this.tmijsService.start();
+          }
+          if (this.twitchApiService.on === false) {
+            this.twitchApiService.start(this.authService.getAccessToken());
+          }
         } else {
           this.router.navigate(["/login"]);
           throw Error(`[${access_token}]. Token is invalid or does not exist.`);
