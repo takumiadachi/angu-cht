@@ -63,12 +63,19 @@ export class TmijsService {
     switch (environment.name) {
       case "prod":
         this.client = tmi.Client({
-          channels: ["#Monstercat"],
+          channels: [],
+          identity: {
+            username: this.authService.getUsername(),
+            password: this.authService.getAccessToken()
+          },
           connection: {
             maxReconnectAttempts: 2,
             maxReconnectInverval: 10,
             reconnect: true,
             secure: true
+          },
+          options: {
+            clientId: environment.twitch_clientId
           }
         }); //Monstercat is a 24/7 music channel.
         break;
@@ -78,6 +85,10 @@ export class TmijsService {
       default:
         this.client = tmi.Client({
           channels: ["#Monstercat"],
+          identity: {
+            username: this.authService.getUsername(),
+            password: this.authService.getAccessToken()
+          },
           connection: {
             maxReconnectAttempts: 2,
             maxReconnectInverval: 10,
