@@ -156,7 +156,7 @@ export class TmijsService {
             channel: `_root`,
             message: `Connected to${address}:${port}`
           };
-          this.addMessage(m);
+          // this.addMessage(m);
         });
         this.client.on("disconnected", reason => {
           let m: Message;
@@ -170,7 +170,7 @@ export class TmijsService {
                 message: `Disconnected.`
               });
 
-          this.addMessage(m);
+          // this.addMessage(m); // e.g _root: Disconnected, _root: Connected toirc-ws.chat.twitch.tv:443
         });
         this.client.on("hosted", (channel, username, viewers, autohost) => {
           console.log(channel, username, viewers, autohost);
