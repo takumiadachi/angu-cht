@@ -1,5 +1,11 @@
-import { Component, OnInit } from "@angular/core";
-import { TmijsService } from "../tmijs.service";
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ElementRef,
+  AfterViewInit
+} from "@angular/core";
+import { TmijsService, CONNECT } from "../tmijs.service";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 
 @Component({
@@ -7,9 +13,10 @@ import { FormGroup, FormBuilder, Validators } from "@angular/forms";
   templateUrl: "./messages.component.html",
   styleUrls: ["./messages.component.scss"]
 })
-export class MessagesComponent implements OnInit {
+export class MessagesComponent implements OnInit, AfterViewInit {
   messagesForm: FormGroup;
   message: string = "";
+  @ViewChild("chatDiv") chatDiv: ElementRef;
 
   constructor(
     public tmijsService: TmijsService,
@@ -24,6 +31,13 @@ export class MessagesComponent implements OnInit {
       },
       {}
     );
+  }
+
+  ngAfterViewInit() {
+    this.tmijsService.eventEmitter.on(CONNECT, () => {
+      console.log(CONNECT);
+      console.log(this.chatDiv);
+    });
   }
 
   onSubmit() {

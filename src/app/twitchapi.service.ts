@@ -2,10 +2,14 @@ import { Injectable } from "@angular/core";
 import { environment } from "../environments/environment";
 import TwitchClient, { AccessToken, Stream, PrivilegedUser } from "twitch";
 import ChatBadgeList from "twitch/lib/API/Badges/ChatBadgeList";
+import { EventEmitter } from "events";
 
 const clientId: string = environment.twitch_clientId;
 const clientSecret: string = environment.twitch_client_secret;
 const refreshToken: string = environment.twitch_refresh_token;
+
+export const CONNECT: string = "twitchapi_service_connect";
+export const DISCONNECT: string = "twitchapi_service_disconnect";
 
 @Injectable({
   providedIn: "root"
@@ -16,6 +20,7 @@ export class TwitchapiService {
   user: PrivilegedUser;
   globalBadgeList: ChatBadgeList;
   on: boolean = false;
+  eventEmitter: EventEmitter = new EventEmitter();
 
   constructor() {
     // dev
@@ -35,12 +40,12 @@ export class TwitchapiService {
       .then(client => {
         this.twitchClient = client;
         this.on = true;
-        console.log(this.twitchClient);
+        this.eventEmitter.emit(CONNECT);
+
         this.twitchClient.kraken.streams
           .getFollowedStreams()
           .then(followedLiveChannels => {
             this.followedLiveStreams = followedLiveChannels;
-            // console.log(this.followedLiveStreams);
           })
           .catch(error => {
             this.followedLiveStreams = null;
@@ -50,7 +55,7 @@ export class TwitchapiService {
           .getMe()
           .then(user => {
             this.user = user;
-            console.log(this.user);
+            // console.log(this.user);
           })
           .catch(error => {
             this.user = null;
@@ -70,6 +75,7 @@ export class TwitchapiService {
       .catch(err => {
         console.error(err);
         this.on = false;
+        this.eventEmitter.emit(DISCONNECT);
       });
   }
 }

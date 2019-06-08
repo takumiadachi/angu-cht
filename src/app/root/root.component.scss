@@ -7,10 +7,12 @@
 }
 
 .fill-height {
-  height: 98vh;
+  height: 100vh;
 }
 
 .channel-sidebar {
-  min-width: 200px;
+  min-width: 10vw;
   max-width: 10vw;
+  margin: 0;
+  padding: 0;
 }

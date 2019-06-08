@@ -1,9 +1,12 @@
 import { Injectable } from "@angular/core";
 import { environment } from "../environments/environment";
 import { Message } from "./messages/message";
-
 import * as tmi from "tmi.js";
 import { AuthService } from "./auth.service";
+import { EventEmitter } from "events";
+
+export const CONNECT: string = "tmijs_service_connect";
+export const DISCONNECT: string = "tmijs_service_disconnect";
 
 @Injectable({
   providedIn: "root"
@@ -13,6 +16,7 @@ export class TmijsService {
   client: tmi.Client;
   currentChannel: string = "";
   on: boolean = false;
+  eventEmitter: EventEmitter = new EventEmitter();
 
   constructor(private authService: AuthService) {
     // this.start().then(data => {
@@ -20,6 +24,10 @@ export class TmijsService {
     // });
   }
 
+  /**
+   * Starts the tmijs service.
+   * Emits an event when it connects.
+   */
   async start() {
     let devOptions: tmi.Options = {
       channels: ["#goati_", "#perpetualmm", "#absnerdity"],
@@ -101,7 +109,9 @@ export class TmijsService {
     await this.client
       .connect()
       .then(data => {
+        // Connected
         this.on = true;
+        this.eventEmitter.emit(CONNECT);
         this.client.on("message", (channel, userstate, messageText, self) => {
           // Don't listen to my own messages..
           if (self) return;
@@ -177,7 +187,9 @@ export class TmijsService {
           // Do your stuff.
         });
         this.client.on("hosting", (channel, target, viewers) => {
-          console.log(channel, target, viewers);
+          console.log(
+            `${channel} is hosting #${target} for ${viewers} viewers`
+          );
           // Do your stuff.
         });
         console.log(data);
@@ -190,12 +202,17 @@ export class TmijsService {
       });
   }
 
-  stop() {
+  /**
+   * Stops the tmijs service and disconnects the client.
+   * Emits an event when it disconnects and stops.
+   */
+  stop(): void {
     this.client
       .disconnect()
       .then(data => {
         console.log(data);
         this.on = false;
+        this.eventEmitter.emit(DISCONNECT);
       })
       .catch(err => {
         console.log(err);
@@ -241,7 +258,6 @@ export class TmijsService {
         .join(channel)
         .then(data => {
           console.log(`Joined channel ${channel}.`);
-          console.log(data);
           return true;
         })
         .catch(err => {
