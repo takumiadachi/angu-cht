@@ -7,6 +7,7 @@ import { EventEmitter } from "events";
 
 export const CONNECT: string = "tmijs_service_connect";
 export const DISCONNECT: string = "tmijs_service_disconnect";
+export const MESSAGE_SENT: string = "tmijs_service_message_sent";
 
 @Injectable({
   providedIn: "root"
@@ -30,7 +31,14 @@ export class TmijsService {
    */
   async start() {
     let devOptions: tmi.Options = {
-      channels: ["#goati_", "#perpetualmm", "#absnerdity"],
+      channels: [
+        "#starcraft",
+        "#playhearthstone",
+        "#taketv",
+        "#goati_",
+        "#perpetualmm",
+        "#absnerdity"
+      ],
       connection: {
         maxReconnectAttempts: 2,
         maxReconnectInverval: 10,
@@ -58,9 +66,7 @@ export class TmijsService {
         error: message => {
           console.log(message);
         },
-        info: message => {
-          // console.log(message);
-        }
+        info: message => {}
       },
       options: {
         clientId: environment.twitch_clientId,
@@ -166,7 +172,7 @@ export class TmijsService {
             channel: `_root`,
             message: `Connected to${address}:${port}`
           };
-          // this.addMessage(m);
+          // this.addMessage(m); // e.g _root: Disconnected, _root: Connected toirc-ws.chat.twitch.tv:443
         });
         this.client.on("disconnected", reason => {
           let m: Message;
@@ -245,6 +251,7 @@ export class TmijsService {
 
   addMessage(message: Message) {
     this.messages.push(message);
+    this.eventEmitter.emit(MESSAGE_SENT);
   }
 
   /**

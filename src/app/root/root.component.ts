@@ -1,7 +1,7 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, AfterViewInit } from "@angular/core";
 import { StorestuffService } from "../storestuff.service";
 import { AuthService } from "../auth.service";
-import { TmijsService } from "../tmijs.service";
+import { TmijsService, CONNECT, MESSAGE_SENT } from "../tmijs.service";
 import { TwitchapiService } from "../twitchapi.service";
 import { Router } from "@angular/router";
 
@@ -10,7 +10,7 @@ import { Router } from "@angular/router";
   templateUrl: "./root.component.html",
   styleUrls: ["./root.component.scss"]
 })
-export class RootComponent implements OnInit {
+export class RootComponent implements OnInit, AfterViewInit {
   constructor(
     private storeStuffService: StorestuffService,
     public tmijsService: TmijsService,
@@ -23,10 +23,7 @@ export class RootComponent implements OnInit {
       .validateAccessToken(access_token)
       .then(valid_access_token => {
         if (valid_access_token) {
-          // this.router.navigate(["/login"]);
-          // We're great, do nothing.
-          console.log(valid_access_token);
-          console.log(this.authService.getCookies());
+          // Everything is good, start the services.
           if (this.tmijsService.on === false) {
             this.tmijsService.start();
           }
@@ -34,6 +31,7 @@ export class RootComponent implements OnInit {
             this.twitchApiService.start(this.authService.getAccessToken());
           }
         } else {
+          // Throw the user back to the login.
           this.router.navigate(["/login"]);
           throw Error(`[${access_token}]. Token is invalid or does not exist.`);
         }
@@ -45,5 +43,11 @@ export class RootComponent implements OnInit {
 
   ngOnInit() {
     console.log(this.storeStuffService.doSomethingAwesome());
+  }
+
+  ngAfterViewInit() {
+    this.tmijsService.eventEmitter.on(CONNECT, () => {
+      this.tmijsService.eventEmitter.on(MESSAGE_SENT, () => {});
+    });
   }
 }

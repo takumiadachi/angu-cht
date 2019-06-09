@@ -3,9 +3,10 @@ import {
   OnInit,
   ViewChild,
   ElementRef,
-  AfterViewInit
+  AfterViewInit,
+  Renderer2
 } from "@angular/core";
-import { TmijsService, CONNECT } from "../tmijs.service";
+import { TmijsService, CONNECT, MESSAGE_SENT } from "../tmijs.service";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 
 @Component({
@@ -20,7 +21,8 @@ export class MessagesComponent implements OnInit, AfterViewInit {
 
   constructor(
     public tmijsService: TmijsService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private renderer: Renderer2
   ) {}
 
   ngOnInit() {
@@ -34,9 +36,27 @@ export class MessagesComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
+    let chatDiv = document.getElementById("chatDiv");
     this.tmijsService.eventEmitter.on(CONNECT, () => {
-      console.log(CONNECT);
-      console.log(this.chatDiv);
+      // console.log(CONNECT);
+      // console.log(this.chatDiv);
+
+      console.log(chatDiv);
+      this.tmijsService.eventEmitter.on(MESSAGE_SENT, () => {
+        // this.chatDiv.nativeElement.scrollTop = 4000;
+
+        // this.renderer.setProperty(
+        //   this.chatDiv.nativeElement,
+        //   "scrollTop",
+        //   this.chatDiv.nativeElement.scrollHeight
+        // );
+        // console.log(this.chatDiv);
+        console.log(chatDiv.scrollHeight);
+        chatDiv.scrollTo(0, chatDiv.scrollHeight + 500);
+        // console.log(chatDiv.scrollTop);
+        // console.log(window.scrollY);
+        // window.scrollTo(0, chatDiv.scrollHeight);
+      });
     });
   }
 
