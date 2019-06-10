@@ -3,8 +3,8 @@
   height: 100vh;
   margin: 0;
   padding: 0;
-  overflow-x: hidden;
-  overflow-y: hidden;
+  overflow-x: hidden !important;
+  overflow-y: hidden !important; /* Prevent scrolling from appearing unless its children */
 }
 
 .fill-height {
@@ -16,4 +16,12 @@
   max-width: 10vw;
   margin: 0;
   padding: 0;
+  overflow-x: inherit;
+}
+
+.messages-sub-container {
+  min-width: 80vw;
+  max-width: 80vh;
+  overflow-x: inherit;
+  overflow-y: hidden;
 }

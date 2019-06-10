@@ -52,7 +52,7 @@ export class MessagesComponent implements OnInit, AfterViewInit {
         // );
         // console.log(this.chatDiv);
         console.log(chatDiv.scrollHeight);
-        chatDiv.scrollTo(0, chatDiv.scrollHeight + 500);
+        chatDiv.scrollTop = chatDiv.scrollHeight * 2;
         // console.log(chatDiv.scrollTop);
         // console.log(window.scrollY);
         // window.scrollTo(0, chatDiv.scrollHeight);
