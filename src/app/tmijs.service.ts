@@ -31,7 +31,7 @@ export class TmijsService {
    */
   async start() {
     let devOptions: tmi.Options = {
-      channels: ["#twitch", "#goati_", "#perpetualmm", "#absnerdity"],
+      channels: ["#goati_", "#perpetualmm", "#absnerdity", "#landail"],
       connection: {
         maxReconnectAttempts: 2,
         maxReconnectInverval: 10,
