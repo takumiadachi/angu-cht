@@ -29,10 +29,19 @@ export class MessagesComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     let chatDiv = document.getElementById("chatDiv");
     this.tmijsService.eventEmitter.on(CONNECT, () => {
-      console.log(chatDiv);
       this.tmijsService.eventEmitter.on(MESSAGE_SENT, () => {
-        console.log(chatDiv.scrollHeight);
-        chatDiv.scrollTop = chatDiv.scrollHeight * 2;
+        // chatDiv.scrollIntoView({ behavior: "smooth", block: "end" });
+        // if (chatDiv.scrollTop >= chatDiv.scrollHeight) {
+        //   console.log(chatDiv.scrollTop, chatDiv.scrollHeight);
+        //   // if the scroll is already at the bottom, scroll down
+        // chatDiv.scrollTop = chatDiv.scrollHeight - chatDiv.clientHeight;
+        console.log(
+          `scrltop: ${chatDiv.scrollTop} vs scrlhei: ${chatDiv.scrollHeight -
+            chatDiv.clientHeight} vs clihei: ${chatDiv.clientHeight}`
+        );
+        chatDiv.scrollTo(0, chatDiv.scrollHeight - chatDiv.clientHeight);
+        // chatDiv.scrollBy(0, chatDiv.scrollHeight + 17);
+        // }
       });
     });
   }
