@@ -16,9 +16,6 @@
     </mat-radio-group>
   </div>
 
-  <!-- <div class="channel-select-form">
-
-  </div> -->
   <div class="channel-list">
     <mat-list role="list" class="no-margins">
       <mat-list-item *ngFor="let stream of getFollowedLiveStreams(); let index=index; let odd=odd; let even=even"
@@ -28,8 +25,6 @@
       </mat-list-item>
     </mat-list>
   </div>
-
-
 
   <!-- Tests -->
   <div id="haveChannels" *ngIf="getFollowedLiveStreams()" class="hidden">

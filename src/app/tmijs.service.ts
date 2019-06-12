@@ -31,7 +31,18 @@ export class TmijsService {
    */
   async start() {
     let devOptions: tmi.Options = {
-      channels: ["#goati_", "#perpetualmm", "#absnerdity", "#landail"],
+      // channels: ["#Kitboga"],
+      channels: [
+        "#goati_",
+        "#aquas",
+        "#perpetualmm",
+        "#absnerdity",
+        "#landail",
+        "#fantastic_planet",
+        "#siglemic",
+        "#TheKotti",
+        "#DarkSaber2k"
+      ],
       connection: {
         maxReconnectAttempts: 2,
         maxReconnectInverval: 10,
@@ -234,17 +245,21 @@ export class TmijsService {
           username: this.client.getUsername(),
           message: message
         };
-        this.messages.push(m);
-        console.log(data);
+        this.addMessage(m);
       })
       .catch(err => {
         console.error(err);
       });
   }
 
+  /**
+   * Adds message to the messages array and emits an event attached with the message.
+   *
+   * @param message
+   */
   addMessage(message: Message) {
     this.messages.push(message);
-    this.eventEmitter.emit(MESSAGE_SENT);
+    this.eventEmitter.emit(MESSAGE_SENT, message);
   }
 
   /**

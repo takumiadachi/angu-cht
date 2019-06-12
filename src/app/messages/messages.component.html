@@ -10,11 +10,13 @@
     </form>
   </div>
   <div #chatDiv id="chatDiv" class="custom-scrollbar">
+
     <mat-card *ngFor="let message of tmijsService.messages" class="message-cards">
       {{ message.channel }}
       {{ message.username }}:
       {{ message.message }}
-
+      <!-- after each ngfor scrollToBottom() if necssary-->
+      {{ scrollToBottom() }}
     </mat-card>
   </div>
   <div id="haveMessages" *ngIf="tmijsService.messages" class="hidden">

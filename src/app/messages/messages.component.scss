@@ -20,13 +20,13 @@
 
 #chatDiv {
   display: inline-block;
-  width: 89vw;
+  width: 88vw;
   height: 93vh;
-  overflow: auto;
+  overflow-y: scroll;
 }
 
 .message-full-width {
-  width: 100%;
+  width: 88vw;
 }
 
 .message-cards {

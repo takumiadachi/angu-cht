@@ -10,6 +10,7 @@ import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 export class MessagesComponent implements OnInit, AfterViewInit {
   messagesForm: FormGroup;
   message: string = "";
+  chatDiv: HTMLElement;
 
   constructor(
     public tmijsService: TmijsService,
@@ -27,21 +28,11 @@ export class MessagesComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    let chatDiv = document.getElementById("chatDiv");
+    // Set the chat div element so we can scroll it.
+    this.chatDiv = document.getElementById("chatDiv");
     this.tmijsService.eventEmitter.on(CONNECT, () => {
-      this.tmijsService.eventEmitter.on(MESSAGE_SENT, () => {
-        // chatDiv.scrollIntoView({ behavior: "smooth", block: "end" });
-        // if (chatDiv.scrollTop >= chatDiv.scrollHeight) {
-        //   console.log(chatDiv.scrollTop, chatDiv.scrollHeight);
-        //   // if the scroll is already at the bottom, scroll down
-        // chatDiv.scrollTop = chatDiv.scrollHeight - chatDiv.clientHeight;
-        console.log(
-          `scrltop: ${chatDiv.scrollTop} vs scrlhei: ${chatDiv.scrollHeight -
-            chatDiv.clientHeight} vs clihei: ${chatDiv.clientHeight}`
-        );
-        chatDiv.scrollTo(0, chatDiv.scrollHeight - chatDiv.clientHeight);
-        // chatDiv.scrollBy(0, chatDiv.scrollHeight + 17);
-        // }
+      this.tmijsService.eventEmitter.on(MESSAGE_SENT, data => {
+        // console.log(data);
       });
     });
   }
@@ -58,5 +49,22 @@ export class MessagesComponent implements OnInit, AfterViewInit {
     );
 
     this.messagesForm.get("message").setValue("");
+  }
+
+  scrollToBottom() {
+    if (this.chatDiv) {
+      const scrolledBottom =
+        this.chatDiv.scrollHeight - this.chatDiv.clientHeight;
+
+      console.log(`${this.chatDiv.scrollTop} ${scrolledBottom}`);
+
+      // Keep scrolled bottom if already scrolled bottom.
+      if (this.chatDiv.scrollTop === scrolledBottom) {
+        this.chatDiv.scrollTo(
+          0,
+          this.chatDiv.scrollHeight - this.chatDiv.clientHeight
+        );
+      }
+    }
   }
 }
