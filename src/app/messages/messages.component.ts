@@ -11,6 +11,7 @@ export class MessagesComponent implements OnInit, AfterViewInit {
   messagesForm: FormGroup;
   message: string = "";
   chatDiv: HTMLElement;
+  scrollBottom: boolean;
 
   constructor(
     public tmijsService: TmijsService,
