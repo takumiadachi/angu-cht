@@ -31,18 +31,19 @@ export class TmijsService {
    */
   async start() {
     let devOptions: tmi.Options = {
+      channels: ["#playhearthstone", "#basetradetv"],
       // channels: ["#Kitboga"],
-      channels: [
-        "#goati_",
-        "#aquas",
-        "#perpetualmm",
-        "#absnerdity",
-        "#landail",
-        "#fantastic_planet",
-        "#siglemic",
-        "#TheKotti",
-        "#DarkSaber2k"
-      ],
+      // channels: [
+      //   "#goati_",
+      //   "#aquas",
+      //   "#perpetualmm",
+      //   "#absnerdity",
+      //   "#landail",
+      //   "#fantastic_planet",
+      //   "#siglemic",
+      //   "#TheKotti",
+      //   "#DarkSaber2k"
+      // ],
       connection: {
         maxReconnectAttempts: 2,
         maxReconnectInverval: 10,

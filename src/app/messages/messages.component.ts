@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from "@angular/core";
+import { Component, OnInit, AfterViewInit, Renderer2 } from "@angular/core";
 import { TmijsService, CONNECT, MESSAGE_SENT } from "../tmijs.service";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 
@@ -11,11 +11,13 @@ export class MessagesComponent implements OnInit, AfterViewInit {
   messagesForm: FormGroup;
   message: string = "";
   chatDiv: HTMLElement;
-  scrollBottom: boolean;
+  scrolledBottom: boolean = true;
+  scrollCount: number = 1;
 
   constructor(
     public tmijsService: TmijsService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private renderer: Renderer2
   ) {}
 
   ngOnInit() {
@@ -36,6 +38,9 @@ export class MessagesComponent implements OnInit, AfterViewInit {
         // console.log(data);
       });
     });
+    this.renderer.listen(this.chatDiv, "scroll", evt => {
+      this.checkIfBottom();
+    });
   }
 
   onSubmit() {
@@ -54,18 +59,20 @@ export class MessagesComponent implements OnInit, AfterViewInit {
 
   scrollToBottom() {
     if (this.chatDiv) {
-      const scrolledBottom =
-        this.chatDiv.scrollHeight - this.chatDiv.clientHeight;
+      const bottom = this.chatDiv.scrollHeight - this.chatDiv.clientHeight;
 
-      console.log(`${this.chatDiv.scrollTop} ${scrolledBottom}`);
+      // Keep scrolling bottom as messages come through if scrolledBottom boolean is true
+      this.scrolledBottom ? this.chatDiv.scrollTo(0, bottom) : null;
+    }
+  }
 
-      // Keep scrolled bottom if already scrolled bottom.
-      if (this.chatDiv.scrollTop === scrolledBottom) {
-        this.chatDiv.scrollTo(
-          0,
-          this.chatDiv.scrollHeight - this.chatDiv.clientHeight
-        );
-      }
+  checkIfBottom() {
+    if (this.chatDiv) {
+      // Set scrolledBottom flag to true if at bottom and keep it there unless otherwise
+      const bottom = this.chatDiv.scrollHeight - this.chatDiv.clientHeight;
+      this.chatDiv.scrollTop === bottom
+        ? (this.scrolledBottom = true)
+        : (this.scrolledBottom = false);
     }
   }
 }
