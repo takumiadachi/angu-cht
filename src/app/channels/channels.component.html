@@ -9,8 +9,8 @@
       <button id="join" mat-raised-button name="submit" value="Submit" class="button">Join</button>
     </form>
     <mat-radio-group aria-label="Select a Channel to Send Messages">
-      <mat-radio-button (change)="selectChannel(channel)" *ngFor="let channel of getJoinedChannels()"
-        class="channel-select-item" value="{{channel}}">
+      <mat-radio-button style="display: block;" (change)="selectChannel(channel)"
+        *ngFor="let channel of getJoinedChannels()" class="channel-select-item" value="{{channel}}">
         <span class="channel-select-item-text">{{ channel }}</span>
       </mat-radio-button>
     </mat-radio-group>

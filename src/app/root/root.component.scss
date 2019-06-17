@@ -1,29 +1,22 @@
 @import "../app.component.scss";
 
 .container {
-  width: 100vw;
-  height: 100vh;
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden !important;
-  overflow-y: hidden !important; /* Prevent scrolling from appearing unless its children */
+  width: 98vw;
+  margin: 10px;
+  padding: 20px;
+  border-style: groove;
 }
 
 .fill-height {
-  height: 100vh;
+  height: 98vh;
 }
 
 .channel-sidebar {
   min-width: 10vw;
   max-width: 10vw;
-  margin: 0;
-  padding: 0;
-  overflow-x: inherit;
 }
 
 .messages-sub-container {
   min-width: 80vw;
   max-width: 80vh;
-  overflow-x: inherit;
-  overflow-y: hidden;
 }

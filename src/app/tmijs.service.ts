@@ -31,19 +31,16 @@ export class TmijsService {
    */
   async start() {
     let devOptions: tmi.Options = {
-      channels: ["#playhearthstone", "#basetradetv"],
+      // channels: ["#playhearthstone", "#basetradetv"],
       // channels: ["#Kitboga"],
-      // channels: [
-      //   "#goati_",
-      //   "#aquas",
-      //   "#perpetualmm",
-      //   "#absnerdity",
-      //   "#landail",
-      //   "#fantastic_planet",
-      //   "#siglemic",
-      //   "#TheKotti",
-      //   "#DarkSaber2k"
-      // ],
+      channels: [
+        "#tak_ada",
+        "#goati_",
+        "#aquas",
+        "#perpetualmm",
+        "#absnerdity",
+        "#landail"
+      ],
       connection: {
         maxReconnectAttempts: 2,
         maxReconnectInverval: 10,
@@ -167,6 +164,11 @@ export class TmijsService {
           if (this.client.getUsername() === username) {
             !this.currentChannel ? (this.currentChannel = channel) : ""; // Set current channel to the first one joined on first connection.
             console.log(`${username} (You) joined ${channel}`);
+
+            // Debug your own messages.
+            if (`#${this.client.getUsername()}` === channel) {
+              this.say("#tak_ada", "this is a test.");
+            }
           }
         });
         this.client.on("logon", () => {

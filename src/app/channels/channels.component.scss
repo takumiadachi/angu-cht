@@ -1,30 +1,30 @@
 @import "../app.component.scss";
 
-#join {
-  margin: 5px;
-}
+// #join {
+//   margin: 5px;
+// }
 
-.channel-form {
-  background-color: whitesmoke;
-  position: -webkit-sticky;
-  position: sticky;
-  border: 1px solid #bdc2bd;
-  top: 0;
-  z-index: 9999;
-  margin: 10px;
-}
+// .channel-form {
+//   background-color: whitesmoke;
+//   // position: -webkit-sticky;
+//   // position: sticky;
+//   border: 1px solid #bdc2bd;
+//   top: 0;
+//   z-index: 9999;
+//   margin: 10px;
+// }
 
-.channel-select-form {
-  position: -webkit-sticky;
-  position: sticky;
-  top: 0;
-  border: 1px solid #587959;
-  z-index: 9998;
-}
+// .channel-select-form {
+//   // position: -webkit-sticky;
+//   // position: sticky;
+//   top: 0;
+//   border: 1px solid #587959;
+//   z-index: 9998;
+// }
 
-.channel-select-item {
-  margin: 5px;
-}
+// .channel-select-item {
+//   margin: 5px;
+// }
 
 .channel-select-item-text {
   white-space: nowrap;
@@ -33,27 +33,27 @@
   overflow: hidden;
 }
 
-.channel-list {
-  border: 1px solid #646464;
-}
+// .channel-list {
+//   height: 80vh;
+// }
 
-.channel-list-item:hover {
-  cursor: pointer;
-}
+// .channel-list-item:hover {
+//   cursor: pointer;
+// }
 
-.odd {
-  color: black;
-}
+// .odd {
+//   color: black;
+// }
 
-.even {
-  background-color: lightgray;
-}
+// .even {
+//   background-color: lightgray;
+// }
 
-.full-width {
-  width: 100%;
-}
+// .full-width {
+//   width: 100%;
+// }
 
-.no-margins {
-  margin: 0px;
-  padding: 0px;
-}
+// .no-margins {
+//   margin: 0px;
+//   padding: 0px;
+// }

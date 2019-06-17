@@ -1,33 +1,34 @@
-@import "../app.component.scss";
+// @import "../app.component.scss";
 
-#messagesDiv {
-  width: 89vw;
-  height: 99vh;
-  overflow-y: hidden;
-  overflow-x: hidden;
-  margin: 5px;
-  padding: 0;
-}
+// #messagesDiv {
+//   width: 89vw;
+//   height: 99vh;
+//   overflow-y: hidden;
+//   overflow-x: hidden;
+//   margin: 5px;
+//   margin-left: 12vw;
+//   padding: 0;
+// }
 
-#messageFormDiv {
-  position: -webkit-sticky;
-  position: sticky;
-  z-index: 9999;
-  margin: inherit;
-  height: 5vh;
-  margin-left: 3px;
-}
+// #messageFormDiv {
+//   position: -webkit-sticky;
+//   position: sticky;
+//   z-index: 9999;
+//   margin: inherit;
+//   height: 5vh;
+//   margin-left: 3px;
+// }
 
-#chatDiv {
-  display: inline-block;
-  width: 88vw;
-  height: 93vh;
-  overflow-y: scroll;
-}
+// #chatDiv {
+//   display: inline-block;
+//   width: 78vw;
+//   height: 93vh;
+//   overflow-y: scroll;
+// }
 
-.message-full-width {
-  width: 88vw;
-}
+// .message-full-width {
+//   width: 90%;
+// }
 
 .message-cards {
   display: block;
