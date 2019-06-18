@@ -1,8 +1,18 @@
+<mat-drawer-container class="container" [hasBackdrop]="false">
+  <mat-drawer #drawer opened="true" mode="side">
+    <app-channels></app-channels>
+  </mat-drawer>
+  <mat-drawer-content>
+    <app-channels></app-channels>
+    <!-- <button mat-raised-button (click)="drawer.toggle()">Toggle drawer</button> -->
+  </mat-drawer-content>
+</mat-drawer-container>
+
 <!-- <mat-sidenav-container id="container" class="container fill-height ">
   <mat-drawer #drawer opened class="example-sidenav" mode="side" class="channel-sidebar ">
 
   </mat-drawer>
 
 </mat-sidenav-container> -->
-<app-channels></app-channels>
-<app-messages class="messages-sub-container"></app-messages>
+<!-- <app-channels></app-channels>
+<app-messages class="messages-sub-container"></app-messages> -->
