@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from "@angular/core";
+import { Component, OnInit, AfterViewInit, Renderer2 } from "@angular/core";
 import { StorestuffService } from "../storestuff.service";
 import { AuthService } from "../auth.service";
 import { TmijsService, CONNECT, MESSAGE_SENT } from "../tmijs.service";
@@ -11,12 +11,15 @@ import { Router } from "@angular/router";
   styleUrls: ["./root.component.scss"]
 })
 export class RootComponent implements OnInit, AfterViewInit {
+  matDrawerInnerContainer: Element;
+
   constructor(
     private storeStuffService: StorestuffService,
     public tmijsService: TmijsService,
     private twitchApiService: TwitchapiService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private renderer: Renderer2
   ) {
     const access_token = this.authService.getAccessToken();
     this.authService
@@ -46,8 +49,11 @@ export class RootComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.tmijsService.eventEmitter.on(CONNECT, () => {
-      this.tmijsService.eventEmitter.on(MESSAGE_SENT, () => {});
-    });
+    this.matDrawerInnerContainer = document.getElementsByClassName(
+      "mat-drawer-inner-container"
+    )[0];
+    console.log(this.matDrawerInnerContainer);
+    // Add custom scrollbar one level deep past mat-drawer-container
+    this.matDrawerInnerContainer.className += " custom-scrollbar";
   }
 }
